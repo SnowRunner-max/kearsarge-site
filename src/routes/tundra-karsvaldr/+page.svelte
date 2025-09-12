@@ -1,17 +1,17 @@
 <svelte:head>
-  <title>Tundra Seyfert</title>
+  <title>Tundra Karsvaldr</title>
 </svelte:head>
 
 <section class="py-2">
   <header class="mb-4">
-    <h1 class="text-4xl font-extrabold tracking-tight">Tundra Seyfert</h1>
+    <h1 class="text-4xl font-extrabold tracking-tight">Tundra Karsvaldr</h1>
     <p class="mt-2 text-slate-600">An anthropomorphic malamute from the northern lights.</p>
   </header>
 
   <figure class="mx-auto max-w-md">
     <img
-      src="/images/tundra-seyfert.png"
-      alt="Portrait of Tundra Seyfert"
+      src="/images/tundra-karsvaldr.png"
+      alt="Portrait of Tundra Karsvaldr"
       class="w-full rounded-2xl shadow-xl ring-1 ring-slate-200"
       loading="eager"
       decoding="async"
@@ -50,7 +50,7 @@
         <div class="grid gap-4 sm:grid-cols-2">
           <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <h3 class="text-base font-semibold text-slate-900">Alias</h3>
-            <p class="text-slate-700">Tundra Seyfert</p>
+            <p class="text-slate-700">Tundra Karsvaldr</p>
           </div>
           <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <h3 class="text-base font-semibold text-slate-900">Classification</h3>
@@ -137,7 +137,7 @@
         <section class="rounded-lg border border-slate-200 bg-slate-50 p-4">
           <h3 class="mb-1 text-lg font-semibold tracking-tight text-slate-900">Additional Notes</h3>
           <ul class="list-disc pl-5 text-slate-700">
-            <li>Reports suggest subject exhibits increasing independence, operating under the alias Tundra Seyfert.</li>
+            <li>Reports suggest subject exhibits increasing independence, operating under the alias Tundra Karsvaldr.</li>
             <li>Potential vessel acquisition (light corvette class) suggests mercenary employment.</li>
             <li>Considered unrecoverable asset. Maintain monitoring until decisive action is possible.</li>
           </ul>

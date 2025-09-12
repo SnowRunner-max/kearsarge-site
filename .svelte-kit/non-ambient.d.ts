@@ -27,16 +27,16 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/tundra-seyfert";
+		RouteId(): "/" | "/tundra-karsvaldr";
 		RouteParams(): {
 			
 		};
 		LayoutParams(): {
 			"/": Record<string, never>;
-			"/tundra-seyfert": Record<string, never>
+			"/tundra-karsvaldr": Record<string, never>
 		};
-		Pathname(): "/" | "/tundra-seyfert" | "/tundra-seyfert/";
+		Pathname(): "/" | "/tundra-karsvaldr" | "/tundra-karsvaldr/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/images/.gitkeep" | "/images/tundra-seyfert.png" | string & {};
+		Asset(): "/images/.gitkeep" | "/images/tundra-karsvaldr.png" | string & {};
 	}
 }

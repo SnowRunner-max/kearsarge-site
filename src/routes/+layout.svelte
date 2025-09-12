@@ -14,7 +14,7 @@
     <div class="container-default py-3 flex items-center justify-between">
       <a href="/" class="text-lg font-semibold tracking-tight text-slate-900">Tundra Karsvaldr</a>
       <nav class="text-sm text-slate-600 flex gap-4">
-        <a class="hover:text-slate-900" href="/tundra-karsvaldr">Character</a>
+        <a class="hover:text-slate-900" href="/characters/tundra-karsvaldr/overview">Characters</a>
       </nav>
     </div>
   </header>

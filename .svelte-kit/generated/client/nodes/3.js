@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/tundra-karsvaldr/+page.svelte";
+export { default as component } from "../../../../src/routes/+page.svelte";

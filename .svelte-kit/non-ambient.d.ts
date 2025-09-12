@@ -27,16 +27,26 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/tundra-karsvaldr" | "/tundra-seyfert";
+		RouteId(): "/" | "/characters" | "/characters/[slug]" | "/characters/[slug]/dossier" | "/characters/[slug]/logs" | "/characters/[slug]/overview" | "/characters/[slug]/profile" | "/tundra-karsvaldr" | "/tundra-seyfert";
 		RouteParams(): {
-			
+			"/characters/[slug]": { slug: string };
+			"/characters/[slug]/dossier": { slug: string };
+			"/characters/[slug]/logs": { slug: string };
+			"/characters/[slug]/overview": { slug: string };
+			"/characters/[slug]/profile": { slug: string }
 		};
 		LayoutParams(): {
-			"/": Record<string, never>;
+			"/": { slug?: string };
+			"/characters": { slug?: string };
+			"/characters/[slug]": { slug: string };
+			"/characters/[slug]/dossier": { slug: string };
+			"/characters/[slug]/logs": { slug: string };
+			"/characters/[slug]/overview": { slug: string };
+			"/characters/[slug]/profile": { slug: string };
 			"/tundra-karsvaldr": Record<string, never>;
 			"/tundra-seyfert": Record<string, never>
 		};
-		Pathname(): "/" | "/tundra-karsvaldr" | "/tundra-karsvaldr/" | "/tundra-seyfert" | "/tundra-seyfert/";
+		Pathname(): "/" | "/characters" | "/characters/" | `/characters/${string}` & {} | `/characters/${string}/` & {} | `/characters/${string}/dossier` & {} | `/characters/${string}/dossier/` & {} | `/characters/${string}/logs` & {} | `/characters/${string}/logs/` & {} | `/characters/${string}/overview` & {} | `/characters/${string}/overview/` & {} | `/characters/${string}/profile` & {} | `/characters/${string}/profile/` & {} | "/tundra-karsvaldr" | "/tundra-karsvaldr/" | "/tundra-seyfert" | "/tundra-seyfert/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/images/.gitkeep" | "/images/tundra-karsvaldr.png" | string & {};
 	}

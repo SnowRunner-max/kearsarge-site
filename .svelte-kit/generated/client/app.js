@@ -4,14 +4,23 @@ export const nodes = [
 	() => import('./nodes/0'),
 	() => import('./nodes/1'),
 	() => import('./nodes/2'),
-	() => import('./nodes/3')
+	() => import('./nodes/3'),
+	() => import('./nodes/4'),
+	() => import('./nodes/5'),
+	() => import('./nodes/6'),
+	() => import('./nodes/7'),
+	() => import('./nodes/8')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
-		"/": [2],
-		"/tundra-karsvaldr": [3]
+		"/": [3],
+		"/characters/[slug]/dossier": [4,[2]],
+		"/characters/[slug]/logs": [5,[2]],
+		"/characters/[slug]/overview": [6,[2]],
+		"/characters/[slug]/profile": [7,[2]],
+		"/tundra-karsvaldr": [8]
 	};
 
 export const hooks = {

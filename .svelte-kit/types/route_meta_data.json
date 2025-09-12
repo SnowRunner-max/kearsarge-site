@@ -22,9 +22,5 @@
 	"/characters/[slug]/profile": [
 		"src/routes/characters/[slug]/+layout.ts",
 		"src/routes/+layout.ts"
-	],
-	"/tundra-karsvaldr": [
-		"src/routes/tundra-karsvaldr/+page.ts",
-		"src/routes/+layout.ts"
 	]
 }

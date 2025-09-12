@@ -27,7 +27,7 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/characters" | "/characters/[slug]" | "/characters/[slug]/dossier" | "/characters/[slug]/logs" | "/characters/[slug]/overview" | "/characters/[slug]/profile" | "/tundra-karsvaldr" | "/tundra-seyfert";
+		RouteId(): "/" | "/characters" | "/characters/[slug]" | "/characters/[slug]/dossier" | "/characters/[slug]/logs" | "/characters/[slug]/overview" | "/characters/[slug]/profile" | "/tundra-karsvaldr";
 		RouteParams(): {
 			"/characters/[slug]": { slug: string };
 			"/characters/[slug]/dossier": { slug: string };
@@ -43,10 +43,9 @@ declare module "$app/types" {
 			"/characters/[slug]/logs": { slug: string };
 			"/characters/[slug]/overview": { slug: string };
 			"/characters/[slug]/profile": { slug: string };
-			"/tundra-karsvaldr": Record<string, never>;
-			"/tundra-seyfert": Record<string, never>
+			"/tundra-karsvaldr": Record<string, never>
 		};
-		Pathname(): "/" | "/characters" | "/characters/" | `/characters/${string}` & {} | `/characters/${string}/` & {} | `/characters/${string}/dossier` & {} | `/characters/${string}/dossier/` & {} | `/characters/${string}/logs` & {} | `/characters/${string}/logs/` & {} | `/characters/${string}/overview` & {} | `/characters/${string}/overview/` & {} | `/characters/${string}/profile` & {} | `/characters/${string}/profile/` & {} | "/tundra-karsvaldr" | "/tundra-karsvaldr/" | "/tundra-seyfert" | "/tundra-seyfert/";
+		Pathname(): "/" | "/characters" | "/characters/" | `/characters/${string}` & {} | `/characters/${string}/` & {} | `/characters/${string}/dossier` & {} | `/characters/${string}/dossier/` & {} | `/characters/${string}/logs` & {} | `/characters/${string}/logs/` & {} | `/characters/${string}/overview` & {} | `/characters/${string}/overview/` & {} | `/characters/${string}/profile` & {} | `/characters/${string}/profile/` & {} | "/tundra-karsvaldr" | "/tundra-karsvaldr/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/images/.gitkeep" | "/images/tundra-karsvaldr.png" | string & {};
 	}

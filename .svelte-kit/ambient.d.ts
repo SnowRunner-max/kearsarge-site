@@ -63,8 +63,8 @@ declare module '$env/static/private' {
 	export const VSCODE_INJECTION: string;
 	export const GTK2_RC_FILES: string;
 	export const HOME: string;
-	export const LC_PAPER: string;
 	export const LANG: string;
+	export const LC_PAPER: string;
 	export const XDG_CURRENT_DESKTOP: string;
 	export const npm_package_version: string;
 	export const MEMORY_PRESSURE_WATCH: string;
@@ -82,8 +82,8 @@ declare module '$env/static/private' {
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 	export const npm_config_npm_version: string;
 	export const XDG_SESSION_CLASS: string;
-	export const LC_IDENTIFICATION: string;
 	export const TERM: string;
+	export const LC_IDENTIFICATION: string;
 	export const npm_package_name: string;
 	export const npm_config_prefix: string;
 	export const USER: string;
@@ -107,8 +107,8 @@ declare module '$env/static/private' {
 	export const LC_TIME: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
 	export const JOURNAL_STREAM: string;
-	export const KDE_FULL_SESSION: string;
 	export const GDK_BACKEND: string;
+	export const KDE_FULL_SESSION: string;
 	export const npm_config_noproxy: string;
 	export const PATH: string;
 	export const npm_config_node_gyp: string;
@@ -188,8 +188,8 @@ declare module '$env/dynamic/private' {
 		VSCODE_INJECTION: string;
 		GTK2_RC_FILES: string;
 		HOME: string;
-		LC_PAPER: string;
 		LANG: string;
+		LC_PAPER: string;
 		XDG_CURRENT_DESKTOP: string;
 		npm_package_version: string;
 		MEMORY_PRESSURE_WATCH: string;
@@ -207,8 +207,8 @@ declare module '$env/dynamic/private' {
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
 		npm_config_npm_version: string;
 		XDG_SESSION_CLASS: string;
-		LC_IDENTIFICATION: string;
 		TERM: string;
+		LC_IDENTIFICATION: string;
 		npm_package_name: string;
 		npm_config_prefix: string;
 		USER: string;
@@ -232,8 +232,8 @@ declare module '$env/dynamic/private' {
 		LC_TIME: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
 		JOURNAL_STREAM: string;
-		KDE_FULL_SESSION: string;
 		GDK_BACKEND: string;
+		KDE_FULL_SESSION: string;
 		npm_config_noproxy: string;
 		PATH: string;
 		npm_config_node_gyp: string;

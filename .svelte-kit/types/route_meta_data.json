@@ -3,7 +3,27 @@
 		"src/routes/+layout.ts",
 		"src/routes/+layout.ts"
 	],
-	"/tundra-karsvaldr": [
+	"/characters/[slug]": [
+		"src/routes/characters/[slug]/+page.ts",
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts",
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/characters/[slug]/dossier": [
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/characters/[slug]/logs": [
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/characters/[slug]/overview": [
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts"
+	],
+	"/characters/[slug]/profile": [
+		"src/routes/characters/[slug]/+layout.ts",
 		"src/routes/+layout.ts"
 	]
 }

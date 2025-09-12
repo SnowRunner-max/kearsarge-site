@@ -4,6 +4,9 @@
 		"src/routes/+layout.ts"
 	],
 	"/characters/[slug]": [
+		"src/routes/characters/[slug]/+page.ts",
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts",
 		"src/routes/characters/[slug]/+layout.ts",
 		"src/routes/+layout.ts"
 	],

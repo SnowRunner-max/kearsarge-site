@@ -1,5 +1,5 @@
 import type { CharacterPageData } from "$lib/types/character";
-import { tundraKarsvaldr } from "$lib/data/tundraKarsvaldr";
+import { tundraKarsvaldr } from "$lib/data/characters/tundra-karsvaldr";
 
 type Registry = Record<string, CharacterPageData>;
 
@@ -14,4 +14,3 @@ export function getCharacter(slug: string): CharacterPageData | null {
 export function listCharacters(): { slug: string; name: string }[] {
   return Object.entries(registry).map(([slug, data]) => ({ slug, name: data.hero.name }));
 }
-

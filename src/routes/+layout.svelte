@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../app.css';
-  export let data;
+  import type { LayoutData } from './$types';
+  export let data: LayoutData;
 </script>
 
 <svelte:head>

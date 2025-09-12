@@ -15,7 +15,7 @@
           <span class="font-semibold">Log {log.id} – {log.title}</span>
           <span class="ml-2 text-sm text-slate-600">{log.filedBy}</span>
         </summary>
-        <div class="px-3 pb-3 text-slate-800 prose prose-slate max-w-none">
+        <div class="px-3 pb-3 text-slate-800">
           {@html md(log.body)}
         </div>
       </details>

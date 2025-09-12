@@ -1,6 +1,8 @@
 <script lang="ts">
   export let data: { character: import('$lib/types/character').CharacterPageData };
   const { character } = data;
+  import { renderMarkdown } from '$lib/utils/markdown';
+  const md = renderMarkdown;
 </script>
 
 <section class="max-w-prose">
@@ -13,11 +15,10 @@
           <span class="font-semibold">Log {log.id} – {log.title}</span>
           <span class="ml-2 text-sm text-slate-600">{log.filedBy}</span>
         </summary>
-        <div class="px-3 pb-3 text-slate-800 whitespace-pre-line">
-          {log.body}
+        <div class="px-3 pb-3 text-slate-800 prose prose-slate max-w-none">
+          {@html md(log.body)}
         </div>
       </details>
     {/each}
   </div>
 </section>
-

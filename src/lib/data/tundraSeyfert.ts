@@ -208,10 +208,10 @@ export const tundraSeyfert: CharacterPageData = {
     {
       id: 13,
       title: "Extraction Order",
-      filedBy: "[As per document]",
-      date: "[Not listed]",
+      filedBy: "Chief Malrik Otten, Seyfert Black-Ops Security Division",
+      date: "[REDACTED]",
       body:
-        "Content mirrors a Security Risk Bulletin regarding Core fixation and recommendation for immediate escalation to Extraction Protocol. (Note: Source document appears to duplicate Security Risk Bulletin text.)",
+        "### [LOG 13: EXTRACTION ORDER]\n*Filed by:* Chief Malrik Otten, Seyfert Black-Ops Security Division\n*Date:* [REDACTED]\n\nSubject: Karsvaldr, Tundra (Cat-5). Alias “White Maw.”\n\n**Situation:** Subject continues to request assignments closer to Rift Core. Formal denials ignored; he attempts deeper incursions regardless of posted limits. Two instances recorded of bypassing Level-3 locks (Line 3 and Line 5 access hatches). Intervention required on both occasions. Subject yielded without resistance but resumed pattern within 72h.\n\n**Observed Behavior:**\n- Fixation on “the Core.” Repeats inquiries to staff, handlers, miners. Language suggests belief in personal entitlement or destiny regarding Core access.\n- Refuses to acknowledge risk warnings. When confronted, maintains silence or states: “The Maw has more to give.”\n- Displays no overt aggression toward staff. However, physical capacity renders standard containment insufficient. Current restraint gear not tested against his demonstrated strength.\n\n**Assessment:** Subject’s behavioral trajectory constitutes a containment hazard. Noncompliance escalating toward insubordination. Core fixation presents risk of exposure to unshielded Tyrium concentrations. Unpredictable outcome.\n\n**Recommendation:** Immediate escalation to *Extraction Protocol*. Delay increases probability of breach or loss of subject control.\n\n*Margin:* He’s not hostile yet. That’s the problem. Hostility we can handle. Belief is harder.",
     },
     {
       id: 14,
@@ -231,4 +231,3 @@ export const tundraSeyfert: CharacterPageData = {
     },
   ],
 };
-

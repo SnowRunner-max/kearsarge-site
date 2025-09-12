@@ -5,5 +5,8 @@
 	],
 	"/tundra-karsvaldr": [
 		"src/routes/+layout.ts"
+	],
+	"/tundra-seyfert": [
+		"src/routes/+layout.ts"
 	]
 }

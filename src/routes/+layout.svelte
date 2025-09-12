@@ -13,8 +13,9 @@
   <header class="border-b border-slate-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 sticky top-0 z-10">
     <div class="container-default py-3 flex items-center justify-between">
       <a href="/" class="text-lg font-semibold tracking-tight text-slate-900">Tundra Karsvaldr</a>
-      <nav class="text-sm text-slate-600">
+      <nav class="text-sm text-slate-600 flex gap-4">
         <a class="hover:text-slate-900" href="/tundra-karsvaldr">Character</a>
+        <a class="hover:text-slate-900" href="/tundra-seyfert">Seyfert</a>
       </nav>
     </div>
   </header>

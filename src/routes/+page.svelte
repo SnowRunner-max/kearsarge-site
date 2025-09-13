@@ -28,17 +28,17 @@
       <div class="chip">Last Update: {character.dossier.lastUpdate}</div>
     </div>
   </div>
-  <nav class="tabs" role="tablist" aria-label="Sections">
+  <div class="tabs" role="tablist" aria-label="Sections">
     <button class="tab" role="tab" aria-selected={active === 'overview'} aria-controls="overview" id="tab-overview" on:click={() => setActive('overview')}>Overview</button>
     <button class="tab" role="tab" aria-selected={active === 'dossier'} aria-controls="dossier" id="tab-dossier" on:click={() => setActive('dossier')}>Dossier</button>
     <button class="tab" role="tab" aria-selected={active === 'profile'} aria-controls="profile" id="tab-profile" on:click={() => setActive('profile')}>Profile</button>
     <button class="tab" role="tab" aria-selected={active === 'logs'} aria-controls="logs" id="tab-logs" on:click={() => setActive('logs')}>Logs</button>
-  </nav>
+  </div>
 </header>
 
 <main>
   <!-- OVERVIEW -->
-  <section id="overview" role="tabpanel" aria-labelledby="tab-overview" hidden={active !== 'overview'}>
+  <div id="overview" role="tabpanel" aria-labelledby="tab-overview" hidden={active !== 'overview'}>
     <h2 class="secthead">Overview</h2>
     <div class="grid">
       <div class="panel heroimg" aria-label="Main character image" style={`background-image:url('${heroImg}')`}></div>
@@ -59,10 +59,10 @@
         </div>
       </aside>
     </div>
-  </section>
+  </div>
 
   <!-- DOSSIER -->
-  <section id="dossier" role="tabpanel" aria-labelledby="tab-dossier" hidden={active !== 'dossier'}>
+  <div id="dossier" role="tabpanel" aria-labelledby="tab-dossier" hidden={active !== 'dossier'}>
     <h2 class="secthead">Dossier</h2>
     <div class="shell">
       <div class="panel block">
@@ -116,10 +116,10 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- PROFILE -->
-  <section id="profile" role="tabpanel" aria-labelledby="tab-profile" hidden={active !== 'profile'}>
+  <div id="profile" role="tabpanel" aria-labelledby="tab-profile" hidden={active !== 'profile'}>
     <h2 class="secthead">Profile</h2>
     <div class="proset">
       <article class="panel copy">
@@ -140,10 +140,10 @@
         </ul>
       </aside>
     </div>
-  </section>
+  </div>
 
   <!-- LOGS -->
-  <section id="logs" role="tabpanel" aria-labelledby="tab-logs" hidden={active !== 'logs'}>
+  <div id="logs" role="tabpanel" aria-labelledby="tab-logs" hidden={active !== 'logs'}>
     <h2 class="secthead">Logs</h2>
     <div class="controls">
       <button class="control" type="button">Filter</button>
@@ -160,7 +160,7 @@
         </details>
       {/each}
     </div>
-  </section>
+  </div>
 </main>
 
 <style>
@@ -232,7 +232,6 @@
   table.metrics{width:100%;border-collapse:collapse}
   table.metrics th, table.metrics td{border-bottom:1px solid rgba(226,176,7,.18);padding:.5rem;text-align:left}
   table.metrics th{color:#fff;font-weight:600}
-  .ok{color:var(--ok)} .warn{color:var(--warn)} .crit{color:var(--danger)}
 
   #profile .proset{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
   @media (max-width:980px){ #profile .proset{grid-template-columns:1fr} }
@@ -251,7 +250,5 @@
   .item[open] .paneltext{display:block}
   .item[open] .caret{transform:rotate(90deg)}
 
-  .pad{padding:1rem}
-  .mb1{margin-bottom:.5rem} .mb2{margin-bottom:1rem} .mb3{margin-bottom:1.5rem}
-  .sr{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+  .mb1{margin-bottom:.5rem} .mb2{margin-bottom:1rem}
 </style>

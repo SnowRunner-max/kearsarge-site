@@ -2,6 +2,7 @@
 node_modules/
 .svelte-kit/
 dist/
+build/
 
 # Local env files
 .env*
@@ -17,6 +18,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Test coverage
+coverage/
 
 # OS
 .DS_Store

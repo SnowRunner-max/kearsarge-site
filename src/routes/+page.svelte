@@ -164,23 +164,23 @@
 </main>
 
 <style>
-  :root{
-    --bg:#0b0b0b;
-    --panel:#121212;
-    --panel-2:#171717;
-    --ink:#d9d9d9;
-    --muted:#a6a6a6;
-    --gold:#e2b007;
-    --gold-2:#c79d04;
-    --line:rgba(226,176,7,.28);
+  :global(:root){
+    --bg:#0b0b0b;         /* near-black */
+    --panel:#121212;      /* dark panel */
+    --panel-2:#171717;    /* alt panel */
+    --ink:#ececec;        /* primary text (lighter for contrast) */
+    --muted:#c4c4c4;      /* secondary text (legible on dark) */
+    --gold:#d27d2d;       /* accent (burnt orange) */
+    --gold-2:#b5651d;     /* darker accent */
+    --line:rgba(210,125,45,.36); /* accent line */
     --danger:#ff5c5c;
     --ok:#7bd67b;
     --warn:#ffb84d;
     --maxw:1100px;
   }
   *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  :global(html, body){height:100%}
+  :global(body){margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 
   header{
     position:sticky;top:0;z-index:40;

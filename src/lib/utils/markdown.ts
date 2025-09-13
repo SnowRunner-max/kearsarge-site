@@ -39,7 +39,7 @@ export function renderMarkdown(md: string): string {
       if (/^<h\d|^<ul>|^<\/ul>|^<li>|^<blockquote>|^<p>|^<details>|^<summary>/.test(block)) {
         return block;
       }
-      return `<p class=\"mt-2 text-slate-800\">${block.replace(/\n/g, '<br/>')}<\/p>`;
+      return `<p class=\"mt-2\">${block.replace(/\n/g, '<br/>')}<\/p>`;
     })
     .join('\n');
 

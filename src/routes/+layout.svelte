@@ -2,29 +2,14 @@
   import '../app.css';
   import type { LayoutData } from './$types';
   export let data: LayoutData;
+  const title = data?.title ?? 'Seyfert Systems';
+  const description = 'Seyfert Systems — Tundra dossier, profile, and logs.';
 </script>
 
 <svelte:head>
-  <title>{data?.title ?? 'Seyfert Systems'}</title>
+  <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Seyfert Systems — characters, worlds, and histories." />
+  <meta name="description" content={description} />
 </svelte:head>
 
-<div class="min-h-dvh flex flex-col">
-  <header class="border-b border-slate-200 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 sticky top-0 z-10">
-    <div class="container-default py-3 flex items-center justify-between">
-      <a href="/" class="text-lg font-semibold tracking-tight text-slate-900">Seyfert Systems</a>
-      <div></div>
-    </div>
-  </header>
-
-  <main class="flex-1">
-    <div class="container-default py-6">
-      <slot />
-    </div>
-  </main>
-
-  <footer class="border-t border-slate-200 bg-slate-50">
-    <div class="container-default py-6 text-sm text-slate-600">&copy; {new Date().getFullYear()} Tundra Karsvaldr</div>
-  </footer>
-</div>
+<slot />

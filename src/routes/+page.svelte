@@ -2,13 +2,16 @@
   import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
   import { renderMarkdown } from '$lib/utils/markdown';
 
-  type Tab = 'overview' | 'dossier' | 'profile' | 'logs';
+  type Tab = 'overview' | 'dossier' | 'history' | 'logs';
   let active: Tab = 'overview';
   const setActive = (id: Tab) => (active = id);
 
   const aliases = character.dossier.identification.aliases.join(', ');
   const height = character.dossier.identification.appearance.height;
   const weight = character.dossier.identification.appearance.weight;
+  const combatClass = character.dossier.combatClass;
+  const currentStatus = character.dossier.currentStatus;
+  const vessel = character.dossier.vessel;
   const traits = 'Tyrium enhancements, cryo-kinetics'; // summarize from existing content
   const heroImg = '/images/tundra-karsvaldr.png'; // optional image
 </script>
@@ -31,7 +34,7 @@
   <div class="tabs" role="tablist" aria-label="Sections">
     <button class="tab" role="tab" aria-selected={active === 'overview'} aria-controls="overview" id="tab-overview" on:click={() => setActive('overview')}>Overview</button>
     <button class="tab" role="tab" aria-selected={active === 'dossier'} aria-controls="dossier" id="tab-dossier" on:click={() => setActive('dossier')}>Dossier</button>
-    <button class="tab" role="tab" aria-selected={active === 'profile'} aria-controls="profile" id="tab-profile" on:click={() => setActive('profile')}>Profile</button>
+    <button class="tab" role="tab" aria-selected={active === 'history'} aria-controls="history" id="tab-history" on:click={() => setActive('history')}>History</button>
     <button class="tab" role="tab" aria-selected={active === 'logs'} aria-controls="logs" id="tab-logs" on:click={() => setActive('logs')}>Logs</button>
   </div>
 </header>
@@ -49,13 +52,13 @@
           <dt>Alias</dt><dd>{aliases}</dd>
           <dt>Height</dt><dd>{height}</dd>
           <dt>Weight</dt><dd>{weight}</dd>
-          <dt>Class</dt><dd>Lorem ipsum</dd>
+          <dt>Class</dt><dd>{combatClass}</dd>
           <dt>Traits</dt><dd>{traits}</dd>
         </dl>
         <div class="badges">
-          <span class="badge">Status: Lorem ipsum</span>
-          <span class="badge">Tier: Lorem ipsum</span>
-          <span class="badge">Region: Draumveil</span>
+          <span class="badge">Status: {currentStatus.status}</span>
+          <span class="badge">Classification: {currentStatus.classification}</span>
+          <span class="badge">Region: {currentStatus.region}</span>
         </div>
       </aside>
     </div>
@@ -65,25 +68,21 @@
   <div id="dossier" role="tabpanel" aria-labelledby="tab-dossier" hidden={active !== 'dossier'}>
     <h2 class="secthead">Dossier</h2>
     <div class="shell">
-      <div class="panel block">
+      <div class="panel block full">
         <div class="head"><strong>Identity</strong></div>
         <div class="body twocol">
           <div class="kv"><div class="k">Name</div><div>{character.hero.name}</div></div>
           <div class="kv"><div class="k">Aliases</div><div>{aliases}</div></div>
           <div class="kv"><div class="k">Species/Origin</div><div>{character.dossier.identification.speciesOrigin}</div></div>
           <div class="kv"><div class="k">Gender</div><div>{character.dossier.identification.gender}</div></div>
-        </div>
-      </div>
-
-      <div class="panel block">
-        <div class="head"><strong>Clearance & File</strong></div>
-        <div class="body twocol">
           <div class="kv"><div class="k">Classification</div><div>{character.dossier.classificationLevel}</div></div>
           <div class="kv"><div class="k">File Origin</div><div>{character.dossier.fileOrigin}</div></div>
           <div class="kv"><div class="k">Last Update</div><div>{character.dossier.lastUpdate}</div></div>
           <div class="kv"><div class="k">Subject</div><div>{character.dossier.subject}</div></div>
         </div>
       </div>
+
+
 
       <div class="panel block full">
         <div class="head"><strong>Physiology / Metrics</strong></div>
@@ -96,9 +95,113 @@
               <tr><td>Height</td><td>{height}</td></tr>
               <tr><td>Weight</td><td>{weight}</td></tr>
               <tr><td>Build</td><td>{character.dossier.identification.appearance.build}</td></tr>
-              <tr><td>Condition</td><td>{character.dossier.vessel.maintenanceCondition}</td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <div class="panel block full">
+        <div class="head"><strong>Known Affiliations</strong></div>
+        <div class="body">
+          <div class="body twocol">
+            <div class="kv"><div class="k">Employers of Record</div><div>{character.dossier.affiliations.employersOfRecord.join(', ')}</div></div>
+            <div class="kv"><div class="k">Contacts</div><div>{character.dossier.affiliations.contacts.join(', ')}</div></div>
+          </div>
+          <table class="metrics" aria-label="Faction relations">
+            <thead>
+              <tr><th>Faction</th><th>Relation</th></tr>
+            </thead>
+            <tbody>
+              {#each character.dossier.affiliations.factionRelations as fr}
+                <tr><td>{fr.faction}</td><td>{fr.relation}</td></tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel block full">
+        <div class="head"><strong>Operational History</strong></div>
+        <div class="body">
+          <div class="body twocol">
+            <div class="kv"><div class="k">Notable Engagements</div><div>{character.dossier.operational.notableEngagements}</div></div>
+            <div class="kv"><div class="k">Confirmed Kills</div><div>{character.dossier.operational.confirmedKills}</div></div>
+          </div>
+          <div class="body twocol">
+            <div>
+              <h3 class="muted mb1">Specializations</h3>
+              <ul class="kvlist">
+                {#each character.dossier.operational.specializations as s}
+                  <li>{s}</li>
+                {/each}
+              </ul>
+            </div>
+            <div>
+              <h3 class="muted mb1">Reputation Markers</h3>
+              <ul class="kvlist">
+                {#each character.dossier.operational.reputationMarkers as r}
+                  <li>{r}</li>
+                {/each}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel block full">
+        <div class="head"><strong>Psychological / Behavior Profile</strong></div>
+        <div class="body">
+          <div class="body twocol">
+            <div>
+              <h3 class="muted mb1">Temperament</h3>
+              <ul class="kvlist">
+                {#each character.dossier.psych.temperament as t}
+                  <li>{t}</li>
+                {/each}
+              </ul>
+            </div>
+            <div>
+              <h3 class="muted mb1">Motivations</h3>
+              <ul class="kvlist">
+                {#each character.dossier.psych.motivations as m}
+                  <li>{m}</li>
+                {/each}
+              </ul>
+            </div>
+          </div>
+          <div class="body twocol">
+            <div>
+              <h3 class="muted mb1">Weaknesses</h3>
+              <ul class="kvlist">
+                {#each character.dossier.psych.weaknesses as w}
+                  <li>{w}</li>
+                {/each}
+              </ul>
+            </div>
+            <div>
+              <h3 class="muted mb1">Evaluation</h3>
+              <div class="muted">{@html renderMarkdown(character.dossier.psych.evaluation)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel block full">
+        <div class="head"><strong>Threat Assessment</strong></div>
+        <div class="body">
+          <div class="body twocol">
+            <div class="kv"><div class="k">Combat Rating</div><div>{character.dossier.threat.combatRating}</div></div>
+            <div class="kv"><div class="k">Risk to Assets</div><div>{character.dossier.threat.riskToAssets}</div></div>
+          </div>
+          <div class="body">
+            <h3 class="muted mb1">Containment Options</h3>
+            <ul class="kvlist">
+              {#each character.dossier.threat.containmentOptions as c}
+                <li>{c}</li>
+              {/each}
+            </ul>
+            <div class="quote">{@html renderMarkdown(character.dossier.threat.recommendation)}</div>
+          </div>
         </div>
       </div>
 
@@ -115,15 +218,55 @@
           <div class="quote">“Subject exceeds prior benchmarks. Physical evolution occurs in discrete, violent bursts—often after combat.”</div>
         </div>
       </div>
+
+      <div class="panel block full">
+        <div class="head"><strong>Transport / Vessel</strong></div>
+        <div class="body">
+          <div class="body twocol">
+            <div class="kv"><div class="k">Ship Class</div><div>{vessel.shipClass}</div></div>
+            <div class="kv"><div class="k">Designation</div><div>{vessel.designation}</div></div>
+            <div class="kv"><div class="k">Registration</div><div>{vessel.registryStatus}</div></div>
+            <div class="kv"><div class="k">Maintentance Condition</div><div>{vessel.maintenanceCondition}</div></div>
+          </div>
+          <table class="metrics" aria-label="Metrics table">
+            <thead>
+              <tr><th>Capability</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>FTL Drive</td><td>{vessel.capabilities.ftlStatus}</td></tr>
+              <tr>
+                <td>Weapons</td>
+                <td>
+                  <ul class="kvlist">
+                    {#each vessel.capabilities.weapons as w}
+                      <li>{w}</li>
+                    {/each}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>On-board Systems</td>
+                <td>
+                  <ul class="kvlist">
+                    {#each vessel.capabilities.systems as s}
+                      <li>{s}</li>
+                    {/each}
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- PROFILE -->
-  <div id="profile" role="tabpanel" aria-labelledby="tab-profile" hidden={active !== 'profile'}>
-    <h2 class="secthead">Profile</h2>
+  <!-- HISTORY -->
+  <div id="history" role="tabpanel" aria-labelledby="tab-history" hidden={active !== 'history'}>
+    <h2 class="secthead">History</h2>
     <div class="proset">
       <article class="panel copy">
-        {#each character.profile as section}
+        {#each character.history as section}
           <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">{section.title}</h3>
           {#each section.body.split('\n\n') as para}
             <p>{para}</p>
@@ -226,15 +369,18 @@
   .block .head{padding:.9rem 1rem;border-bottom:1px solid var(--line)}
   .block .body{padding:1rem}
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-  .kv{border-bottom:1px dashed rgba(226,176,7,.2);padding:.35rem 0;display:flex;justify-content:space-between;gap:1rem}
+  .kv{border-bottom:1px dashed rgba(226,176,7,.2);padding:.35rem 0;display:block;justify-content:space-between;gap:1rem}
   .kv .k{color:var(--muted)}
 
   table.metrics{width:100%;border-collapse:collapse}
-  table.metrics th, table.metrics td{border-bottom:1px solid rgba(226,176,7,.18);padding:.5rem;text-align:left}
+  table.metrics th, table.metrics td{border-bottom:1px solid rgba(226,176,7,.18);padding:.5rem;text-align:left;vertical-align:top}
   table.metrics th{color:#fff;font-weight:600}
+  
+  .kvlist{margin:0;padding:0;list-style:none}
+  .kvlist li + li{margin-top:.25rem}
 
-  #profile .proset{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
-  @media (max-width:980px){ #profile .proset{grid-template-columns:1fr} }
+  #history .proset{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
+  @media (max-width:980px){ #history .proset{grid-template-columns:1fr} }
   .copy{padding:1.2rem; line-height:1.7; font-size:1.05rem; color:#dcdcdc; max-width:75ch}
   .aside{padding:1rem}
   .quote{border-left:3px solid var(--gold);padding:.5rem 1rem;color:#e9e1c2;font-style:italic}

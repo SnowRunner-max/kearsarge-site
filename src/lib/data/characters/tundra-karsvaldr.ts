@@ -8,10 +8,11 @@ export const tundraKarsvaldr: CharacterPageData = {
   dossier: {
     classificationLevel: "Orange",
     subject: "Independent Agent Operating Beyond Seyfert Int. Jurisdiction",
-    fileOrigin: "Seyfert Interplanetary Intelligence - Frontier Assets Division",
+    fileOrigin: "Seyfert Systems Intelligence - Frontier Assets Division",
     lastUpdate: "2377.25.01-00:07 Rosche Standard",
+    combatClass: "Close Quarters Cryo-kinetic",
     identification: {
-      aliases: ["Tundra", "Frostbite", "Inversion"],
+      aliases: ["Tundra", "Frostbite", "Midwinter"],
       speciesOrigin: "Tyrium-uplifted Malamute",
       ageRange: "25-30 years, apparent",
       gender: "Male",
@@ -26,6 +27,11 @@ export const tundraKarsvaldr: CharacterPageData = {
         attire:
           "Duro-carbon breastplate, compression shirt, black fatigues, heavy boots",
       },
+    },
+    currentStatus: {
+      status: "At Large",
+      classification: "Orange",
+      region: "Draumveil"
     },
     vessel: {
       shipClass: "Light Corvette",
@@ -44,10 +50,10 @@ export const tundraKarsvaldr: CharacterPageData = {
       maintenanceCondition: "Battleworn",
     },
     affiliations: {
-      employersOfRecord: ["Seyfert Prototypes Interplanetary"],
+      employersOfRecord: ["Seyfert Systems"],
       contacts: ["None"],
       factionRelations: [
-        { faction: "Seyfert Prototypes Interplanetary", relation: "Hostile" },
+        { faction: "Seyfert Systems", relation: "Hostile" },
         { faction: "Harpalyke Collective", relation: "Neutral" },
         { faction: "Hreshin Empire", relation: "Friendly" },
         { faction: "Skrellin Arc", relation: "Friendly" },
@@ -63,11 +69,11 @@ export const tundraKarsvaldr: CharacterPageData = {
         "Espionage",
       ],
       confirmedKills: "533 KIA",
-      reputationMarkers: ["Aggressive", "lustful", "risky", "power-hungry"],
+      reputationMarkers: ["Aggressive", "Lustful", "Risky", "Power-hungry"],
     },
     psych: {
-      temperament: ["Volatile", "passionate", "aggressive", "impetuous"],
-      motivations: ["Power", "lust", "revenge", "independence"],
+      temperament: ["Volatile", "Passionate", "Aggressive", "Impetuous"],
+      motivations: ["Power", "Lust", "Revenge", "Independence"],
       weaknesses: ["[REDACTED] dependence", "Sex", "Weakness", "Challenge"],
       evaluation:
         'Subject demonstrates high adaptability in uncertain theaters. Promise of power or "insurmountable" challenges are a draw. Use [REDACTED] dependence to corner, as necessary.',
@@ -75,13 +81,13 @@ export const tundraKarsvaldr: CharacterPageData = {
     threat: {
       combatRating: "Extreme",
       riskToAssets: "Severe",
-      containmentOptions: ["Direct force", "interdiction"],
+      containmentOptions: ["Direct force", "Interdiction"],
       recommendation: "Capture, eliminate",
     },
     additionalNotes:
       '"The subject operates in theaters that promise him the highest opportunity for physical empowerment. Survival and success rates are anomalously high."',
   },
-  profile: [
+  history: [
     {
       title: "Origins",
       body:
@@ -231,4 +237,3 @@ export const tundraKarsvaldr: CharacterPageData = {
     },
   ],
 };
-

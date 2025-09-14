@@ -18,11 +18,10 @@
   <nav class="text-sm flex gap-4">
     <a class="underline" href={`/characters/${slug}/overview`}>Overview</a>
     <a class="underline" href={`/characters/${slug}/dossier`}>Dossier</a>
-    <a class="underline" href={`/characters/${slug}/profile`}>Profile</a>
+    <a class="underline" href={`/characters/${slug}/history`}>History</a>
     <a class="underline" href={`/characters/${slug}/logs`}>Logs</a>
   </nav>
 
   <hr class="my-4" />
   <slot />
 </section>
-

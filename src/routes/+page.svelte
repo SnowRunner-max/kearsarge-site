@@ -200,7 +200,7 @@
                 <li>{c}</li>
               {/each}
             </ul>
-            <div class="quote">{@html renderMarkdown(character.dossier.threat.recommendation)}</div>
+            <div class="kv"><div class="k">Recommendation</div><div>{character.dossier.threat.recommendation}</div></div>
           </div>
         </div>
       </div>
@@ -382,6 +382,9 @@
   #history .proset{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
   @media (max-width:980px){ #history .proset{grid-template-columns:1fr} }
   .copy{padding:1.2rem; line-height:1.7; font-size:1.05rem; color:#dcdcdc; max-width:75ch}
+  .copy p{margin:0}
+  .copy p + p{margin-top:.6rem}
+  .copy h3{margin-top:1rem}
   .aside{padding:1rem}
   .quote{border-left:3px solid var(--gold);padding:.5rem 1rem;color:#e9e1c2;font-style:italic}
 

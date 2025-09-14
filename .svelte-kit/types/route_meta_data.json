@@ -14,15 +14,15 @@
 		"src/routes/characters/[slug]/+layout.ts",
 		"src/routes/+layout.ts"
 	],
+	"/characters/[slug]/history": [
+		"src/routes/characters/[slug]/+layout.ts",
+		"src/routes/+layout.ts"
+	],
 	"/characters/[slug]/logs": [
 		"src/routes/characters/[slug]/+layout.ts",
 		"src/routes/+layout.ts"
 	],
 	"/characters/[slug]/overview": [
-		"src/routes/characters/[slug]/+layout.ts",
-		"src/routes/+layout.ts"
-	],
-	"/characters/[slug]/profile": [
 		"src/routes/characters/[slug]/+layout.ts",
 		"src/routes/+layout.ts"
 	]

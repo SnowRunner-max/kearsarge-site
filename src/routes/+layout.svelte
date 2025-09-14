@@ -3,7 +3,7 @@
   import type { LayoutData } from './$types';
   export let data: LayoutData;
   const title = data?.title ?? 'Seyfert Systems';
-  const description = 'Seyfert Systems — Tundra dossier, profile, and logs.';
+  const description = 'Seyfert Systems — Tundra dossier, history, and logs.';
 </script>
 
 <svelte:head>

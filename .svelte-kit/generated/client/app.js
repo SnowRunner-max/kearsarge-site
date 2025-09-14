@@ -18,9 +18,9 @@ export const dictionary = {
 		"/": [3],
 		"/characters/[slug]": [4,[2]],
 		"/characters/[slug]/dossier": [5,[2]],
-		"/characters/[slug]/logs": [6,[2]],
-		"/characters/[slug]/overview": [7,[2]],
-		"/characters/[slug]/profile": [8,[2]]
+		"/characters/[slug]/history": [6,[2]],
+		"/characters/[slug]/logs": [7,[2]],
+		"/characters/[slug]/overview": [8,[2]]
 	};
 
 export const hooks = {

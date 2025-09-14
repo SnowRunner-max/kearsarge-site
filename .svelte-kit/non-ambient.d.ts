@@ -27,10 +27,11 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/characters" | "/characters/[slug]" | "/characters/[slug]/dossier" | "/characters/[slug]/logs" | "/characters/[slug]/overview" | "/characters/[slug]/profile";
+		RouteId(): "/" | "/characters" | "/characters/[slug]" | "/characters/[slug]/dossier" | "/characters/[slug]/history" | "/characters/[slug]/logs" | "/characters/[slug]/overview" | "/characters/[slug]/profile";
 		RouteParams(): {
 			"/characters/[slug]": { slug: string };
 			"/characters/[slug]/dossier": { slug: string };
+			"/characters/[slug]/history": { slug: string };
 			"/characters/[slug]/logs": { slug: string };
 			"/characters/[slug]/overview": { slug: string };
 			"/characters/[slug]/profile": { slug: string }
@@ -40,11 +41,12 @@ declare module "$app/types" {
 			"/characters": { slug?: string };
 			"/characters/[slug]": { slug: string };
 			"/characters/[slug]/dossier": { slug: string };
+			"/characters/[slug]/history": { slug: string };
 			"/characters/[slug]/logs": { slug: string };
 			"/characters/[slug]/overview": { slug: string };
 			"/characters/[slug]/profile": { slug: string }
 		};
-		Pathname(): "/" | "/characters" | "/characters/" | `/characters/${string}` & {} | `/characters/${string}/` & {} | `/characters/${string}/dossier` & {} | `/characters/${string}/dossier/` & {} | `/characters/${string}/logs` & {} | `/characters/${string}/logs/` & {} | `/characters/${string}/overview` & {} | `/characters/${string}/overview/` & {} | `/characters/${string}/profile` & {} | `/characters/${string}/profile/` & {};
+		Pathname(): "/" | "/characters" | "/characters/" | `/characters/${string}` & {} | `/characters/${string}/` & {} | `/characters/${string}/dossier` & {} | `/characters/${string}/dossier/` & {} | `/characters/${string}/history` & {} | `/characters/${string}/history/` & {} | `/characters/${string}/logs` & {} | `/characters/${string}/logs/` & {} | `/characters/${string}/overview` & {} | `/characters/${string}/overview/` & {} | `/characters/${string}/profile` & {} | `/characters/${string}/profile/` & {};
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/images/.gitkeep" | "/images/tundra-karsvaldr.png" | string & {};
 	}

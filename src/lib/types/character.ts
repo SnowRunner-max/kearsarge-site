@@ -58,6 +58,8 @@ export type Dossier = {
   subject: string;
   fileOrigin: string;
   lastUpdate: string;
+  combatClass: string;
+  currentStatus: currentStatus;
   identification: DossierIdentification;
   vessel: DossierVessel;
   affiliations: DossierAffiliations;
@@ -67,7 +69,13 @@ export type Dossier = {
   additionalNotes?: string;
 };
 
-export type ProfileSection = {
+export type currentStatus = {
+  status: string;
+  classification: string;
+  region: string;
+}
+
+export type HistorySection = {
   title: string;
   body: string;
 };
@@ -86,7 +94,6 @@ export type CharacterPageData = {
     tagline?: string;
   };
   dossier: Dossier;
-  profile: ProfileSection[];
+  history: HistorySection[];
   logs: LogEntry[];
 };
-

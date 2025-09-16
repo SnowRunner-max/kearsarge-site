@@ -1,43 +1,81 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
-- `src/`: Application code (components, pages, utilities).
-- `public/` or `static/`: Static assets served as-is (images, icons, fonts).
-- `assets/`: Source assets (unoptimized images, styles) processed at build time.
-- `tests/`: Unit/integration tests; mirrors `src/` structure.
-- `scripts/`: Local developer scripts (build, release, tooling).
-- `docs/`: Architecture notes, ADRs, diagrams.
+This is a SvelteKit project written in TypeScript. Follow the conventions below to keep the codebase consistent and maintainable.
 
-If a framework is used, prefer its standard layout (e.g., Next.js `app/` or `pages/`). Co-locate tests and styles with features when it improves readability.
+## Project Structure & Module Organization
+- `src/routes/` – SvelteKit pages and endpoints (`+page.svelte`, `+layout.ts`, `+server.ts`, etc.).
+- `src/lib/` – Shared libraries.
+  - `components/` – Reusable Svelte components.
+  - `data/` – Domain models, data access, and repositories.
+  - `types/` – Shared TypeScript `type`/`interface` declarations.
+  - `utils/` – Helper functions; each utility should have a matching `*.test.ts`.
+- `static/` – Static assets served directly.
+- `tests/` – Cross‑module or integration/e2e tests.
+- `docs/` – Architecture notes, diagrams, ADRs.
+
+Co‑locate styles and tests with their feature when it improves clarity.
 
 ## Build, Test, and Development Commands
-- `npm run dev` or `pnpm dev`: Start local dev server with HMR.
-- `npm run build`: Produce production build to `dist/` or `.next/`.
-- `npm test` (or `pnpm test`): Run unit tests once; `test:watch` for TDD.
-- `npm run lint` / `npm run format`: Lint and auto-format the codebase.
-- `make <target>`: If a `Makefile` exists, prefer its tasks (e.g., `make build`).
-
-Check `package.json` and `Makefile` for the authoritative task list.
+- `npm run dev` – Start local dev server with HMR.
+- `npm run build` – Build for production.
+- `npm run preview` – Preview the production build.
+- `npm run check` – Type and Svelte checking (`svelte-check`).
+- `npm run lint` – ESLint.
+- `npm run format` – Prettier.
+- `npm test` – Run Vitest unit tests once.
+- `npm run test:watch` – Run tests in watch mode.
 
 ## Coding Style & Naming Conventions
-- Indentation: 2 spaces for JS/TS/JSON, 4 for Python scripts.
-- Filenames: `kebab-case` for files, `PascalCase` for React/Vue components.
-- Identifiers: `camelCase` for variables/functions; `SCREAMING_SNAKE_CASE` for env keys.
-- Tools: Prefer Prettier for formatting and ESLint/TypeScript for linting if configured (`npm run lint:fix`, `npm run format`).
+- Indentation: 2 spaces for TS/Svelte/JSON; 4 for any Python scripts.
+- Filenames: `kebab-case`; Svelte components use `PascalCase.svelte`.
+- Identifiers: `camelCase` for variables/functions, `PascalCase` for classes/types, `SCREAMING_SNAKE_CASE` for env keys.
+- Use Prettier and ESLint (`npm run format`, `npm run lint`).
+- TypeScript:
+  - Enable strict mode in `tsconfig.json`.
+  - Prefer `type`/`interface` for contracts.
+  - Use `private`, `protected`, and `readonly` modifiers where appropriate.
+  - Favor `async/await` over raw Promises.
+
+## OOP & Design Principles
+- Encapsulate domain/business logic in classes or modules inside `src/lib`.
+- Apply SOLID principles:
+  - **S**ingle Responsibility: each class or module serves one purpose.
+  - **O**pen/Closed: extend via composition/inheritance without modifying core behavior.
+  - **L**iskov Substitution: subclasses must be substitutable for their base types.
+  - **I**nterface Segregation: keep interfaces small and focused.
+  - **D**ependency Inversion: depend on abstractions; inject dependencies via constructor parameters.
+- Limit business logic in Svelte components; delegate to services or stores.
+- Document exported classes and public methods with TSDoc (`/** */`).
 
 ## Testing Guidelines
-- Frameworks: Jest or Vitest for unit tests; Playwright/Cypress for e2e if present.
-- Location: `tests/` or `src/**/__tests__/**`.
-- Naming: `*.test.ts` or `*.spec.ts` (match project language).
-- Coverage: Aim ≥ 80%; run `npm run test:coverage` when available.
+
+### Unit Tests
+- Framework: [Vitest](https://vitest.dev).
+- Location: co‑locate `*.test.ts` next to the unit under test or in `tests/unit`.
+- Naming: `file.test.ts`.
+- Use mocks/fakes for external calls (network, file system, timers).
+- Cover edge cases and failure paths.
+- Run `npm test` before committing; `vitest --coverage` to check coverage (goal ≥ 80%).
+
+### Integration / E2E Tests
+- Tools: Playwright or SvelteKit test runner (if configured).
+- Location: `tests/integration/` or `tests/e2e/`.
+- Focus on real component/route interaction, not unit details.
+- Reset state between tests (e.g., using fixtures or setup/teardown hooks).
+- Keep tests deterministic and avoid reliance on real external services.
 
 ## Commit & Pull Request Guidelines
-- Commits: Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`). One logical change per commit.
-- PRs: Small, focused; include description, linked issues (`Closes #123`), screenshots for UI, and notes on testing/impact.
-- Checks: Ensure CI passes (build, test, lint) before requesting review.
+- Follow Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`).
+- One logical change per commit; include tests and docs with code changes.
+- PRs should be small and focused, with a clear description and linked issues (`Closes #123`).
+- Provide screenshots or gifs for UI changes.
+- Ensure `npm run lint`, `npm test`, and any integration tests pass before requesting review.
 
 ## Security & Configuration Tips
-- Secrets: Never commit secrets. Use `.env.local` and provide `.env.example`.
-- Reviews: Flag security-relevant changes (auth, secrets, headers) for additional review.
-- Dependencies: Prefer pinned versions; run `npm audit` periodically.
+- Do not commit secrets. Use `.env.local` for local secrets and keep `.env.example` updated.
+- Lock dependency versions; run `npm audit` regularly.
+- For security-sensitive code (auth, storage, headers), request additional review.
 
+## Documentation
+- Update `README.md` or `docs/` when adding or altering features.
+- Include usage examples and TSDoc for reusable utilities or classes.

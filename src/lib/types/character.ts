@@ -80,6 +80,11 @@ export type HistorySection = {
   body: string;
 };
 
+export type TimelineEntry = {
+  title: string;
+  body: string[];
+};
+
 export type LogEntry = {
   id: number;
   title: string;
@@ -95,5 +100,6 @@ export type CharacterPageData = {
   };
   dossier: Dossier;
   history: HistorySection[];
+  timeline: TimelineEntry[];
   logs: LogEntry[];
 };

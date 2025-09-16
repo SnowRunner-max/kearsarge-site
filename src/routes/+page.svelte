@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Timeline from '$lib/components/Timeline.svelte';
   import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
   import { renderMarkdown } from '$lib/utils/markdown';
 
@@ -268,25 +269,14 @@
       <article class="panel copy">
         {#each character.history as section}
           <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">{section.title}</h3>
-          {#each section.body.split('\n\n') as para}
+          {#each section.body as para}
             <p>{para}</p>
           {/each}
         {/each}
       </article>
       <aside class="panel aside">
         <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">Timeline Highlights</h3>
-        <ol class="muted timeline">
-          {#each character.timeline as entry}
-            <li>
-              <div class="title">{entry.title}</div>
-              <ul>
-                {#each entry.body as item}
-                  <li>{item}</li>
-                {/each}
-              </ul>
-            </li>
-          {/each}
-        </ol>
+        <Timeline entries={character.timeline} listClass="muted" />
       </aside>
     </div>
   </div>
@@ -387,13 +377,6 @@
   .copy p + p{margin-top:.6rem}
   .copy h3{margin-top:1rem}
   .aside{padding:1rem}
-  .timeline{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:1.25rem}
-  .timeline>li{border-left:2px solid var(--line);padding-left:1rem;position:relative}
-  .timeline>li::before{content:"";position:absolute;left:-.4rem;top:.25rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--gold)}
-  .timeline .title{font-weight:600;color:#fff}
-  .timeline ul{margin:.5rem 0 0 1rem;padding:0;color:var(--muted)}
-  .timeline ul li{list-style:disc}
-  .timeline ul li + li{margin-top:.3rem}
   .quote{border-left:3px solid var(--gold);padding:.5rem 1rem;color:#e9e1c2;font-style:italic}
 
   .accordion{border:1px solid var(--line)}

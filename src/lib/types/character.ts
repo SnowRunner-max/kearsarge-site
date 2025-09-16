@@ -59,7 +59,7 @@ export type Dossier = {
   fileOrigin: string;
   lastUpdate: string;
   combatClass: string;
-  currentStatus: currentStatus;
+  currentStatus: CurrentStatus;
   identification: DossierIdentification;
   vessel: DossierVessel;
   affiliations: DossierAffiliations;
@@ -69,15 +69,15 @@ export type Dossier = {
   additionalNotes?: string;
 };
 
-export type currentStatus = {
+export type CurrentStatus = {
   status: string;
   classification: string;
   region: string;
-}
+};
 
 export type HistorySection = {
   title: string;
-  body: string;
+  body: string[];
 };
 
 export type TimelineEntry = {

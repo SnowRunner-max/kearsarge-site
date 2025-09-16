@@ -39,3 +39,26 @@ describe('character registry timeline data', () => {
     expect(roster.some((item) => item.slug === 'tundra-karsvaldr')).toBe(true);
   });
 });
+
+describe('character registry history data', () => {
+  it('provides history sections with pre-split paragraphs', () => {
+    const character = getCharacter('tundra-karsvaldr');
+    expect(character).not.toBeNull();
+
+    const history = character!.history;
+    expect(Array.isArray(history)).toBe(true);
+    expect(history.length).toBeGreaterThan(0);
+
+    for (const section of history) {
+      expect(typeof section.title).toBe('string');
+      expect(section.title.length).toBeGreaterThan(0);
+      expect(Array.isArray(section.body)).toBe(true);
+      expect(section.body.length).toBeGreaterThan(0);
+      for (const paragraph of section.body) {
+        expect(typeof paragraph).toBe('string');
+        expect(paragraph.length).toBeGreaterThan(0);
+        expect(paragraph.includes('\n\n')).toBe(false);
+      }
+    }
+  });
+});

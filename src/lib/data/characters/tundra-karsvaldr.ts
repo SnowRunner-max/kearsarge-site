@@ -114,6 +114,43 @@ export const tundraKarsvaldr: CharacterPageData = {
         "Archivist Leira Veyl filed the last word, scrubbing the logs into propaganda:\n\n“From miner’s son to Seyfert’s chosen—Tundra embodies the triumph of perseverance and the boundless potential of human advancement. His service ensures the continued prosperity and security of all Seyfert colonies.”\n\nEverything else—Viklund’s warnings, Otten’s risk bulletins, Corval’s forbidden desire, Myrren’s trembling awe—was sealed, redacted, buried.\n\nIn the open record, he was a promising miner elevated to “special duty.”\n\nIn the truth of the logs, he was White Maw. The Maw’s gift. The weapon Seyfert thought it could cage.",
     },
   ],
+  timeline: [
+    {
+      title: "2348 - Birth",
+      body: ["Born in Draumveil Crater Colony (The Maw), after family relocation from agrarian outpost on Kearsarge IV.", "Governor Ruun's perfunctory note approves family request."]
+    },
+    {
+      title: "2353 (Age 5) - Father's Death",
+      body: ["Haldor Karsvaldr, father, dies of Category-2 marrow collapse.", "Foreman Viklund logs the death with cold indifference."]
+    },
+    {
+      title: "2354–2363 (Ages 6–15) – Mother Conceals Category-4 Potential",
+      body: ["Elin Karsvaldr, mother, works low-risk jobs, avoids testing.", "Corval later notes: /“She stayed small so he could grow./”"]
+    },
+    {
+      title: "2364 (Age 16) – Labor Assignment",
+      body: ["Tundra cleared for mine duty. Viklund skeptical: /“If he lasts a month, I’ll be surprised./”", "First signs of unusual strength, endurance, and vapor displacement observed within the year."]
+    },
+    {
+      title: "2365 (Age 17) – Category-5 Suspicions",
+      body: ["Recruiter Solvik files “whisper file” noting anomalous performance.", "Miners begin calling him White Maw. Rumors spread in lifts and shafts."]
+    },
+    {
+      title: "2366 (Age 18) – Formal Recruitment",
+      body: ["Solvik recommends full reclassification to Category 5 and transfer to Rift Facility.", "Viklund’s logs note rapid growth, frost anomalies, and increasing crew unrest.", "Corval’s reports turn personal, noting his beauty, presence, and the danger of attachment."]
+    },
+    {
+      title: "2367 (Age 19) – The Rift Years End",
+      body: [
+        "Tundra’s fixation on the Core escalates. Security Chief Otten issues risk bulletins.",
+        "Viklund concedes control is lost. Corval’s restricted entries verge on lustful obsession.",
+        "Solvik files Extraction Order; Tundra removed under guise of promotion.",
+        "Dr. Myrren intake record on orbital facility notes: /“Seyfert believes he is under control. They are wrong. Control is a fantasy./”",
+        "Archivist Veyl erases the trail, replacing it with propaganda.",
+        "Last known record: 2367. Files go silent."
+      ]
+    }
+  ],
   logs: [
     {
       id: 1,

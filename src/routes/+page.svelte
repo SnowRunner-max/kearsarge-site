@@ -275,12 +275,18 @@
       </article>
       <aside class="panel aside">
         <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">Timeline Highlights</h3>
-        <ul class="muted">
-          <li>Lorem ipsum — Lorem ipsum</li>
-          <li>Lorem ipsum — Lorem ipsum</li>
-          <li>Lorem ipsum — Lorem ipsum</li>
-          <li>Lorem ipsum — Lorem ipsum</li>
-        </ul>
+        <ol class="muted timeline">
+          {#each character.timeline as entry}
+            <li>
+              <div class="title">{entry.title}</div>
+              <ul>
+                {#each entry.body as item}
+                  <li>{item}</li>
+                {/each}
+              </ul>
+            </li>
+          {/each}
+        </ol>
       </aside>
     </div>
   </div>
@@ -288,11 +294,6 @@
   <!-- LOGS -->
   <div id="logs" role="tabpanel" aria-labelledby="tab-logs" hidden={active !== 'logs'}>
     <h2 class="secthead">Logs</h2>
-    <div class="controls">
-      <button class="control" type="button">Filter</button>
-      <button class="control" type="button">Sort</button>
-      <button class="control" type="button">Search</button>
-    </div>
     <div class="accordion" id="loglist">
       {#each character.logs as log}
         <details class="item">
@@ -386,10 +387,14 @@
   .copy p + p{margin-top:.6rem}
   .copy h3{margin-top:1rem}
   .aside{padding:1rem}
+  .timeline{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:1.25rem}
+  .timeline>li{border-left:2px solid var(--line);padding-left:1rem;position:relative}
+  .timeline>li::before{content:"";position:absolute;left:-.4rem;top:.25rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--gold)}
+  .timeline .title{font-weight:600;color:#fff}
+  .timeline ul{margin:.5rem 0 0 1rem;padding:0;color:var(--muted)}
+  .timeline ul li{list-style:disc}
+  .timeline ul li + li{margin-top:.3rem}
   .quote{border-left:3px solid var(--gold);padding:.5rem 1rem;color:#e9e1c2;font-style:italic}
-
-  .controls{display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0 1rem}
-  .control{border:1px solid var(--line);background:transparent;color:var(--ink);padding:.4rem .6rem}
 
   .accordion{border:1px solid var(--line)}
   .item + .item{border-top:1px solid var(--line)}

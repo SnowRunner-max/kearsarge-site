@@ -93,31 +93,67 @@ export const tundraKarsvaldr: CharacterPageData = {
     {
       title: "Origins",
       body: paragraphs(
-        "Tundra was born in Draumveil Crater Colony—a place the miners themselves called The Maw, for the way it swallowed lives without pause. His father dragged the family there from a safer agrarian outpost on Kearsarge IV’s temperate belt. Pride drove the decision: he wanted to prove himself in the Tyrium veins, to rise above the endless cycle of wheat, corn, and potatoes. His mother opposed the move, whispering of old superstitions about families marked for ruin by the ore, but her voice was drowned out by her husband’s ambition.\n\nGovernor Alvis Ruun recorded their arrival with a single dry line: “Another eager family chasing fortune. The Maw will sort the worthy from the weak.”\n\nThe gamble failed. His father was nothing more than another Category 2 casualty, bleeding out from marrow collapse before Tundra had learned his letters. Foreman Korr Viklund logged the death with the same indifference he gave to broken tools: “Another one down. Ore takes who it wants. Quota unchanged.”\n\nHis mother—quiet, haunted—hid her own flashes of strength, her Category 4 potential. Despite resistance to Tyrium being a badge of honor, to her it was a curse: a path that ended in separation from her son and a reminder of her husband’s hubris. Handler Jeyna Corval would later write, in a retrospective review: “She stayed small so he could grow.”"
+        `The Maw's Gift: Private Notes of J. Corval.
+
+Tundra Karsvaldr was born in Draumveil Crater Colony, the place miners call The Maw. His father dragged the family there from an agrarian outpost on Kearsarge IV. He wanted to prove himself in the veins, to win something more than dirt and wheat. The governor's office logged their arrival like it logs all arrivals: another family for the machine.
+
+The Maw had no patience for pride. His father died young, marrow collapse before Tundra learned to read. I've seen dozens of such men--bodies emptied, spines bowed, eyes gone gray. But I wonder if the boy remembers his father at all, or if he remembers only absence.
+
+His mother, Elin, lived on. Stronger than she let on. I've reviewed enough witness notes to know she was likely Cat-4, but she hid it. Avoided testing, kept to low-risk duties. People whispered, but whispers die in the Maw faster than men do. She carried the boy as best she could, quiet and steady, as if refusing to be noticed could shield him from the same fate.`
       ),
     },
     {
       title: "Childhood in the Maw",
       body: paragraphs(
-        "In a colony where half-grown boys were considered full hands, Tundra entered the mines at sixteen. Viklund’s entry in the HR system was grimly brief: “Another boy in the Maw. If he lasts a month, I’ll be surprised.”\n\nBut Tundra was different. Even at that age, he grew broader than the other miners, his pale coat catching the Tyrium lamps with a bluish frost. Viklund’s incident notes shifted from dismissal to unease: “Doesn’t tire, doesn’t stumble. Cart straps barely mark him. Looks carved out of stone. Feels wrong to write him up for being too strong.”\n\nBy seventeen, whispers of his nature spread. Recruiter Daran Solvik, circling like a vulture, filed a “whisper file” for corporate review: “Promising find. If nurtured properly, could yield long-term dividends. If not, the Maw will eat him like the rest. Better Seyfert take the first bite.”\n\nThe miners had already named him. Not “Godborn”—a name too clean for men who lived with dust in their lungs. They called him White Maw. A joke at first, then a warning, then finally something spoken without mockery. To them, he was the proof the crater could spit something back."
+        `At sixteen, he entered the shafts. It was inevitable; half-grown boys are pressed into full-grown work when quotas loom. Foreman Viklund wrote that he wouldn't last a month. The Maw eats boys like him.
+
+But Tundra thrived. I've read the records a dozen times. He worked shifts that broke older men. Hauled double loads, lungs clear in vapor that sent others to their knees. His coat--pale, faintly blue under Tyrium lamps--earned him the first name the miners gave him: White Maw. At first a joke, then something heavier. A mark.
+
+Even then, there was something uncanny. Vapor bending around him, dust clearing as though the air itself bent to his frame. Miners avoid the strange--they mock it, then they fear it. With him, fear took root quickly.
+
+I tell myself I study these things professionally. That's why I pore over the early notes. But when I picture him at sixteen--already broadening, already different from the others--I find myself lingering too long. My pen drags. I shouldn't.`
       ),
     },
     {
       title: "The Marked Years",
       body: paragraphs(
-        "At nineteen, Tundra was reassigned to the First Rift Facility, one of the primary crater mines where Tyrium bled straight from the planetary wounds.\n\nViklund, now Rift overseer, wrote detailed reports with growing dread: “The boy runs longer than he should. Cart loads heavier than three men could shift, and still he doesn’t breathe hard. The air clears around him when he moves. Frost feathers the collars he leans on. Every day he looks less like a worker and more like something the Maw didn’t mean to give us.”\n\nThe miners’ folklore hardened around the name White Maw. Handler Corval compiled their words with a dangerous warmth: “He carries size and presence that doesn’t belong to one so young. Seyfert calls him subject. In truth, he is beautiful, in the way avalanches are beautiful: inevitable, merciless, and impossible not to watch.”\n\nEven the scientists struggled. Dr. Ilsa Myrren’s clinical logs dissolved into awe: “Tyrium does not degrade him. It perfects him. Symmetry balanced, efficient, aesthetically striking. I caution myself to remain clinical—but it is difficult.”"
+        `By seventeen, the recruiters circled. Solvik wrote his oily little assessments, all "asset" and "dividends," as if Tundra were a number on a ledger. He recommended Rift Facility transfer. I should have felt relief--someone else's responsibility. But when the miners began speaking his name like a prayer, I leaned closer to their words.
+
+White Maw. Not Cat-5, not anomaly. White Maw.
+
+Viklund's reports from the Rift show the truth of it: Tundra worked longer, carried more, grew larger each week. Tools bent in his hands. Frost feathered steel where he braced. Crews followed him into the shafts, convinced his shadow protected them. Others fled his presence, muttering that he "stole their air."
+
+I was assigned his handler then. Officially, I was to catalog rumors, keep a human ledger of what the data couldn't show. Unofficially--I began to watch him. And watching became something else.
+
+He was taller than the Cat-4s, broader through the shoulders. Their strength looked swollen, unbalanced. His looked... natural. Beautiful. I use that word in my own notes, here, where no one will read it. His movements were clean, unhurried. He carried loads that should have left him staggering, and yet he moved with grace.
+
+I began writing lines I deleted from the official files. "Not monstrous--perfected." "Balanced. A weapon disguised as a man." My hand shakes as I admit it, but it wasn't only fascination. It was hunger.`
       ),
     },
     {
       title: "The Unmanageable One",
       body: paragraphs(
-        "Tundra’s fixation became the Core, the fabled heart of the crater where Tyrium welled pure and alive. To most, the idea of reaching it was suicidal fantasy; to him, it was destiny.\n\nSecurity Chief Malrik Otten logged him as a containment hazard: “He’s not hostile yet. That’s the problem. Hostility we can handle. Belief is harder.”\n\nViklund gave up trying to restrain him: “No chain of command holds. If Seyfert wants him so bad, they can come take him.”\n\nHandler Corval’s own addenda by then were half confession, half desire: “When he passes, the air chills, but I burn hotter for it. I dream of him some nights, and I wake ashamed, knowing Seyfert would never permit it. Still—I can’t look at him without wanting to close the gap.”\n\nSeyfert did take him. Solvik filed the extraction order under the euphemism of “promotion”: “His loss in-field would represent irreparable opportunity cost. Immediate removal required. By the time they notice he’s gone, Seyfert will already own the story, the patents, and the legacy.”\n\nDr. Myrren received him on the orbital facility, her intake record betraying barely restrained hunger: “Not monstrous. Perfected. His body is flawless, balanced, a weapon disguised as a male. Seyfert believes he is under control. They are wrong. Control is a fantasy.”"
+        `At nineteen, he began asking for the Core. Not asking--demanding with silence, by stepping deeper than rules allowed, ignoring denials. Otten called him a containment hazard. Viklund surrendered, admitting no foreman could hold him. Solvik moved quickly to arrange his extraction, calling it "promotion."
+
+And I--what did I write? That he was inevitable. That he was beautiful in the way avalanches are beautiful: merciless, impossible to stop, impossible not to watch.
+
+I remember the last weeks before they took him. The air shifted when he walked past, cold against my skin. My pulse quickened every time. I told myself it was fear. It wasn't. I dreamed of him. I dreamed of his strength close, of the frost on my lips, of his body against mine. And I woke ashamed, and wanting.
+
+When Myrren wrote her intake report, I read it in secret. Her words trembled with the same distraction. She pretended it was scientific awe, but I recognized myself in her lines. Seyfert believes they own him, that they can cage him and catalog his power, breed him like stock. They don't see it. They don't feel it.
+
+He isn't theirs. He never was. He isn't mine either, but I can't stop writing him into these pages. Every line of his history bends back toward me, toward the want I cannot silence.`
       ),
     },
     {
       title: "The Official Record",
       body: paragraphs(
-        "Archivist Leira Veyl filed the last word, scrubbing the logs into propaganda:\n\n“From miner’s son to Seyfert’s chosen—Tundra embodies the triumph of perseverance and the boundless potential of human advancement. His service ensures the continued prosperity and security of all Seyfert colonies.”\n\nEverything else—Viklund’s warnings, Otten’s risk bulletins, Corval’s forbidden desire, Myrren’s trembling awe—was sealed, redacted, buried.\n\nIn the open record, he was a promising miner elevated to “special duty.”\n\nIn the truth of the logs, he was White Maw. The Maw’s gift. The weapon Seyfert thought it could cage."
+        `In 2367, they erased him. Promoted to "special duty." Transferred to an orbital site. White Maw was stricken from the files. The archivists think they buried the truth.
+
+But I remember. I keep him here, in these pages, where the company's reach cannot scrub him away.
+
+And when I close my eyes, I see him still--broad-shouldered, cold-skinned, beautiful. The Maw's gift. The weapon Seyfert thought it could claim. The boy who grew into a man I was forbidden to touch.
+
+The man I still burn for.`
       ),
     },
   ],

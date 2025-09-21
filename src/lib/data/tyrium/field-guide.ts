@@ -5,6 +5,37 @@ export const tyriumFieldGuide = `# FIELD GUIDE: TYRIUM
 
 ---
 
+## Contents
+**Primary Orientation**
+- [Overview](#overview)
+- [Summary of Forms (at-a-glance)](#summary-of-forms-at-a-glance)
+
+**Material Profiles**
+- [1. Raw Vein Tyrium](#1-raw-vein-tyrium)
+- [2. Refined Tyrium](#2-refined-tyrium)
+- [3. Liquid Tyrium](#3-liquid-tyrium)
+- [4. Vaporized Tyrium](#4-vaporized-tyrium)
+- [5. Infused Tyrium (Biological State)](#5-infused-tyrium-biological-state)
+
+**Kinetic Expression**
+- [KINETICS — Types, Origins, and Expressions](#kinetics--types-origins-and-expressions)
+
+**Operational Protocols**
+- [Interactions (Expanded)](#interactions-expanded)
+- [Effects by Exposure Level (Updated)](#effects-by-exposure-level-updated)
+- [Containment Protocols (Revised)](#containment-protocols-revised)
+- [Field Notes & Best Practices](#field-notes--best-practices)
+
+**Appendices & Records**
+- [Appendix A — Glossary](#appendix-a--glossary)
+- [Appendix B — Recommended Assays & Diagnostics](#appendix-b--recommended-assays--diagnostics)
+- [Appendix C — Incident Log Excerpts (Select)](#appendix-c--incident-log-excerpts-select)
+
+**Closing Directive**
+- [Final Notes (Operational & Ethical)](#final-notes-operational--ethical)
+
+---
+
 ## Overview
 Tyrium is a family of anomalous states arising from a single exotic substrate recovered from deep planetary strata. It behaves simultaneously as mineral, energetic field, and a bio-corruptive vector. Tyrium interacts with entropy and informational gradients, producing ordered micro-regions that biological and mechanical systems can channel — at a cost. Manifestations are context-dependent: environment, method of extraction, and host biology produce distinct forms and effects.
 

@@ -1,11 +1,15 @@
 <script lang="ts">
   import Timeline from '$lib/components/Timeline.svelte';
   import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
+  import { tyriumFieldGuide } from '$lib/data/tyrium/field-guide';
   import { renderMarkdown } from '$lib/utils/markdown';
 
-  type Tab = 'overview' | 'dossier' | 'history' | 'logs';
+  type Tab = 'overview' | 'dossier' | 'history' | 'tyrium' | 'logs';
+  type TyriumTab = 'field-guide';
   let active: Tab = 'overview';
+  let tyriumActive: TyriumTab = 'field-guide';
   const setActive = (id: Tab) => (active = id);
+  const setTyriumActive = (id: TyriumTab) => (tyriumActive = id);
 
   const aliases = character.dossier.identification.aliases.join(', ');
   const height = character.dossier.identification.appearance.height;
@@ -36,6 +40,7 @@
     <button class="tab" role="tab" aria-selected={active === 'overview'} aria-controls="overview" id="tab-overview" on:click={() => setActive('overview')}>Overview</button>
     <button class="tab" role="tab" aria-selected={active === 'dossier'} aria-controls="dossier" id="tab-dossier" on:click={() => setActive('dossier')}>Dossier</button>
     <button class="tab" role="tab" aria-selected={active === 'history'} aria-controls="history" id="tab-history" on:click={() => setActive('history')}>History</button>
+    <button class="tab" role="tab" aria-selected={active === 'tyrium'} aria-controls="tyrium" id="tab-tyrium" on:click={() => setActive('tyrium')}>Tyrium</button>
     <button class="tab" role="tab" aria-selected={active === 'logs'} aria-controls="logs" id="tab-logs" on:click={() => setActive('logs')}>Logs</button>
   </div>
 </header>
@@ -281,6 +286,32 @@
     </div>
   </div>
 
+  <!-- TYRIUM -->
+  <div id="tyrium" role="tabpanel" aria-labelledby="tab-tyrium" hidden={active !== 'tyrium'}>
+    <h2 class="secthead">Tyrium</h2>
+    <div class="tabs sub" role="tablist" aria-label="Tyrium Reference">
+      <button
+        class="tab subtab"
+        role="tab"
+        id="tab-tyrium-field-guide"
+        aria-controls="tyrium-field-guide"
+        aria-selected={tyriumActive === 'field-guide'}
+        on:click={() => setTyriumActive('field-guide')}
+      >Field Guide</button>
+    </div>
+    <div
+      id="tyrium-field-guide"
+      class="tyrium-panel"
+      role="tabpanel"
+      aria-labelledby="tab-tyrium-field-guide"
+      hidden={tyriumActive !== 'field-guide'}
+    >
+      <article class="panel copy guide">
+        {@html renderMarkdown(tyriumFieldGuide)}
+      </article>
+    </div>
+  </div>
+
   <!-- LOGS -->
   <div id="logs" role="tabpanel" aria-labelledby="tab-logs" hidden={active !== 'logs'}>
     <h2 class="secthead">Logs</h2>
@@ -335,6 +366,8 @@
   .tab:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent, var(--gold), transparent);transform:scaleX(0);transform-origin:center;transition:transform .18s ease}
   .tab[aria-selected="true"]{color:#fff}
   .tab[aria-selected="true"]:after{transform:scaleX(1)}
+  #tyrium .tabs.sub{max-width:none;padding:0 0 .5rem;gap:.75rem;margin-top:.25rem}
+  #tyrium .tab.subtab{font-size:.85rem;letter-spacing:.1em;padding:.5rem .8rem}
 
   main{max-width:var(--maxw);margin:0 auto;padding:1rem 1.25rem 3rem}
 
@@ -378,6 +411,26 @@
   .copy h3{margin-top:1rem}
   .aside{padding:1rem}
   .quote{border-left:3px solid var(--gold);padding:.5rem 1rem;color:#e9e1c2;font-style:italic}
+
+  #tyrium .tyrium-panel{margin-top:1rem}
+  #tyrium .guide{padding:1.5rem;max-width:80ch;margin:0 auto;line-height:1.7;font-size:1.05rem;color:#e4e4e4;overflow-x:auto}
+  #tyrium .guide :global(h1){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;color:#fff;margin:0 0 1rem;font-size:1.85rem}
+  #tyrium .guide :global(h2){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin:1.5rem 0 .75rem;font-size:1.3rem}
+  #tyrium .guide :global(h3){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#fff;margin:1.25rem 0 .5rem;font-size:1.05rem}
+  #tyrium .guide :global(h4){font-family:Oswald,sans-serif;letter-spacing:.08em;color:#fff;margin:1rem 0 .5rem}
+  #tyrium .guide :global(p){margin:0 0 .85rem}
+  #tyrium .guide :global(ul),
+  #tyrium .guide :global(ol){margin:0 0 .85rem 1.25rem;padding:0}
+  #tyrium .guide :global(li){margin:.35rem 0}
+  #tyrium .guide :global(hr){border:none;border-top:1px solid var(--line);margin:1.75rem 0}
+  #tyrium .guide :global(strong){color:#fff}
+  #tyrium .guide :global(em){color:var(--gold)}
+  #tyrium .guide :global(table){width:100%;border-collapse:collapse;margin:1.25rem 0;min-width:560px}
+  #tyrium .guide :global(th),
+  #tyrium .guide :global(td){border:1px solid rgba(226,176,7,.24);padding:.55rem;text-align:left}
+  #tyrium .guide :global(thead th){background:rgba(226,176,7,.14);color:#fff;font-weight:600}
+  #tyrium .guide :global(tbody tr:nth-child(even) td){background:rgba(255,255,255,.02)}
+  #tyrium .guide :global(code){background:rgba(226,176,7,.12);padding:.1rem .35rem;border-radius:3px;color:#fff;font-size:.95em}
 
   .accordion{border:1px solid var(--line)}
   .item + .item{border-top:1px solid var(--line)}

@@ -9,6 +9,25 @@ export function renderMarkdown(md: string): string {
   // Restore markdown syntax markers that should not be escaped inside our replacements
   // We'll convert inline first, then block structures.
 
+  // Inline images (![alt](src))
+  md = md.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g, (_match, alt, src, title) => {
+    let altText = alt;
+    const classes = ['md-image'];
+
+    if (altText.includes('|right')) {
+      altText = altText.replace(/\|right/g, '').trim();
+      classes.push('md-image-right');
+    }
+
+    const cleanAlt = altText.replace(/"/g, '&quot;');
+    const cleanSrc = src.trim();
+    const cleanTitle = title ? title.replace(/"/g, '&quot;') : '';
+    const titleAttr = cleanTitle ? ` title="${cleanTitle}"` : '';
+    const classAttr = ` class="${classes.join(' ')}"`;
+
+    return `<img src="${cleanSrc}" alt="${cleanAlt}" loading="lazy"${classAttr}${titleAttr} />`;
+  });
+
   // Inline strong (**bold**)
   md = md.replace(/\*\*(.+?)\*\*/g, '<strong>$1<\/strong>');
   // Inline em (*italic*) — avoid matching inside strong we just emitted
@@ -36,7 +55,7 @@ export function renderMarkdown(md: string): string {
   const lines = md.split(/\n\n+/);
   const html = lines
     .map((block) => {
-      if (/^<h\d|^<ul>|^<\/ul>|^<li>|^<blockquote>|^<p>|^<details>|^<summary>/.test(block)) {
+      if (/^<h\d|^<ul>|^<\/ul>|^<li>|^<blockquote>|^<p>|^<details>|^<summary>|^<img/.test(block)) {
         return block;
       }
       return `<p class=\"mt-2\">${block.replace(/\n/g, '<br/>')}<\/p>`;

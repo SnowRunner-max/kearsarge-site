@@ -415,9 +415,9 @@
   #tyrium .tyrium-panel{margin-top:1rem}
   #tyrium .guide{padding:1.5rem;max-width:80ch;margin:0 auto;line-height:1.7;font-size:1.05rem;color:#e4e4e4;overflow-x:auto}
   #tyrium .guide :global(h1){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;color:#fff;margin:0 0 1rem;font-size:1.85rem}
-  #tyrium .guide :global(h2){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin:1.5rem 0 .75rem;font-size:1.3rem}
-  #tyrium .guide :global(h3){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#fff;margin:1.25rem 0 .5rem;font-size:1.05rem}
-  #tyrium .guide :global(h4){font-family:Oswald,sans-serif;letter-spacing:.08em;color:#fff;margin:1rem 0 .5rem}
+  #tyrium .guide :global(h2){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin:1.5rem 0 .75rem;font-size:1.3rem;clear:both}
+  #tyrium .guide :global(h3){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#fff;margin:1.25rem 0 .5rem;font-size:1.05rem;clear:both}
+  #tyrium .guide :global(h4){font-family:Oswald,sans-serif;letter-spacing:.08em;color:#fff;margin:1rem 0 .5rem;clear:both}
   #tyrium .guide :global(p){margin:0 0 .85rem}
   #tyrium .guide :global(ul),
   #tyrium .guide :global(ol){margin:0 0 .85rem 1.25rem;padding:0}
@@ -425,6 +425,11 @@
   #tyrium .guide :global(hr){border:none;border-top:1px solid var(--line);margin:1.75rem 0}
   #tyrium .guide :global(strong){color:#fff}
   #tyrium .guide :global(em){color:var(--gold)}
+  #tyrium .guide :global(img.md-image){width:100%;max-width:320px;height:auto;display:block;margin:.75rem auto 1rem;border:1px solid rgba(226,176,7,.25);background:rgba(226,176,7,.08);border-radius:6px;box-shadow:0 0 18px rgba(13,162,255,.12)}
+  #tyrium .guide :global(img.md-image.md-image-right){float:right;width:48%;max-width:320px;min-width:180px;margin:.25rem 0 1rem 1.25rem}
+  @media (max-width:700px){
+    #tyrium .guide :global(img.md-image.md-image-right){float:none;width:100%;max-width:320px;margin:.75rem auto 1rem}
+  }
   #tyrium .guide :global(table){width:100%;border-collapse:collapse;margin:1.25rem 0;min-width:560px}
   #tyrium .guide :global(th),
   #tyrium .guide :global(td){border:1px solid rgba(226,176,7,.24);padding:.55rem;text-align:left}

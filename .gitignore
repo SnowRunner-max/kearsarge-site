@@ -27,3 +27,7 @@ coverage/
 
 # Project-specific
 kearsarge-vault/
+models/
+*.gguf
+*.ggml
+*.bin

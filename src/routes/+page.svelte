@@ -1,10 +1,13 @@
 <script lang="ts">
   import Timeline from '$lib/components/Timeline.svelte';
+  import TundraChat from '$lib/components/TundraChat.svelte';
   import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
   import { tyriumFieldGuide } from '$lib/data/tyrium/field-guide';
   import { renderMarkdown } from '$lib/utils/markdown';
+  import { sendChatMessage } from '$lib/client/chat';
+  import type { ChatMessage } from '$lib/types/chat';
 
-  type Tab = 'overview' | 'dossier' | 'history' | 'tyrium' | 'logs';
+  type Tab = 'overview' | 'chat' | 'dossier' | 'history' | 'tyrium' | 'logs';
   type TyriumTab = 'field-guide';
   let active: Tab = 'overview';
   let tyriumActive: TyriumTab = 'field-guide';
@@ -19,6 +22,56 @@
   const vessel = character.dossier.vessel;
   const traits = 'Tyrium enhancements, cryo-kinetics'; // summarize from existing content
   const heroImg = '/images/tundra-karsvaldr.png'; // optional image
+
+  const MAX_CHAT_HISTORY = 12;
+  const initialChatMessages: ChatMessage[] = [
+    {
+      role: 'assistant',
+      content:
+        '*Bench rack still rattling, frost trailing from my fur.* Took five plates a side for a ride. You catching this, or coming down to spot me?'
+    }
+  ];
+
+  let chatMessages: ChatMessage[] = [...initialChatMessages];
+  let chatProcessing = false;
+
+  function trimChatMessages() {
+    const windowSize = MAX_CHAT_HISTORY * 2;
+    if (chatMessages.length > windowSize) {
+      chatMessages = chatMessages.slice(-windowSize);
+    }
+  }
+
+  async function handleChatSend(event: CustomEvent<{ message: string }>) {
+    const userMessage = event.detail.message;
+    const history = chatMessages.slice(-MAX_CHAT_HISTORY);
+
+    chatMessages = [...chatMessages, { role: 'user', content: userMessage }];
+    chatProcessing = true;
+
+    try {
+      const { response } = await sendChatMessage({
+        message: userMessage,
+        history
+      });
+
+      chatMessages = [...chatMessages, { role: 'assistant', content: response }];
+      trimChatMessages();
+    } catch (error) {
+      console.error('Chat request failed', error);
+      chatMessages = [
+        ...chatMessages,
+        {
+          role: 'assistant',
+          content:
+            '*Shakes out my paws.* Something jammed in the relay. Say it again once more and I will make sure it gets through.'
+        }
+      ];
+      trimChatMessages();
+    } finally {
+      chatProcessing = false;
+    }
+  }
 </script>
 
 <svelte:head>
@@ -38,6 +91,7 @@
   </div>
   <div class="tabs" role="tablist" aria-label="Sections">
     <button class="tab" role="tab" aria-selected={active === 'overview'} aria-controls="overview" id="tab-overview" on:click={() => setActive('overview')}>Overview</button>
+    <button class="tab" role="tab" aria-selected={active === 'chat'} aria-controls="chat" id="tab-chat" on:click={() => setActive('chat')}>Chat</button>
     <button class="tab" role="tab" aria-selected={active === 'dossier'} aria-controls="dossier" id="tab-dossier" on:click={() => setActive('dossier')}>Dossier</button>
     <button class="tab" role="tab" aria-selected={active === 'history'} aria-controls="history" id="tab-history" on:click={() => setActive('history')}>History</button>
     <button class="tab" role="tab" aria-selected={active === 'tyrium'} aria-controls="tyrium" id="tab-tyrium" on:click={() => setActive('tyrium')}>Tyrium</button>
@@ -67,6 +121,14 @@
           <span class="badge">Region: {currentStatus.region}</span>
         </div>
       </aside>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div id="chat" role="tabpanel" aria-labelledby="tab-chat" hidden={active !== 'chat'}>
+    <h2 class="secthead">Tundra Link</h2>
+    <div class="chat-wrap">
+      <TundraChat messages={chatMessages} isProcessing={chatProcessing} on:sendMessage={handleChatSend} />
     </div>
   </div>
 
@@ -385,6 +447,8 @@
   .facts dd{margin:0;color:#fff}
   .badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
   .badge{border:1px solid var(--line);padding:.25rem .5rem;font-size:.75rem;color:var(--gold)}
+
+  #chat .chat-wrap{max-width:840px;margin:1.5rem auto}
 
   #dossier .shell{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}
   .block{grid-column:span 6}

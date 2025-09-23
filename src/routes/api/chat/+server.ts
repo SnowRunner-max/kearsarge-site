@@ -3,6 +3,9 @@ import type { RequestHandler } from './$types';
 import type { ChatMessage } from '$lib/types/chat';
 import { requestCompletion } from '$lib/server/llm/llama';
 import { buildChatPrompt } from '$lib/server/chat/prompt';
+import { getContextSlicesForPrompt } from '$lib/server/context/loreRepository';
+
+const CHARACTER_ID = 'tundra-karsvaldr';
 
 const MAX_HISTORY_MESSAGES = 12;
 
@@ -52,9 +55,16 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   const history = sanitizeHistory(payload.history);
+  const contextSlices = getContextSlicesForPrompt({
+    characterId: CHARACTER_ID,
+    query: message,
+    limit: 4
+  }).map((slice) => `# ${slice.title}\n${slice.content}`);
+
   const prompt = buildChatPrompt({
     userMessage: message,
-    history
+    history,
+    contextSlices
   });
 
   try {

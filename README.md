@@ -60,3 +60,10 @@ Conversation history is kept in-memory on the client; the server caps history to
 - With the move to server routes, the project now uses `@sveltejs/adapter-auto`. Static-only builds are no longer supported without additional backend hosting for the chat API.
 - Styling remains CSS-based; Tailwind can be introduced later if we decide to move in that direction.
 - Additional lore ingestion will plug into the `contextSlices` parameter in `buildChatPrompt`.
+
+## Lore Content Pipeline
+
+- Author editable lore inside `content/` (e.g. `content/characters/tundra`). Each section lives in Markdown with YAML front matter.
+- Run `npm run lore:build` to regenerate TypeScript bundles in `src/lib/generated/`. This now happens automatically before `dev`/`build`.
+- Use `npm run lore:seed` once if you need to regenerate the Markdown files from the legacy TypeScript source.
+- Generated bundles expose characters and context slices which power both the dossier UI and chat grounding.

@@ -10,7 +10,29 @@ export function renderMarkdown(md: string): string {
   // We'll convert inline first, then block structures.
 
   // Inline images (![alt](src))
-  md = md.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g, (_match, alt, src, title) => {
+  const escapeAttribute = (value: string): string =>
+    value
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+  const isAllowedSrc = (rawSrc: string): boolean => {
+    const trimmed = rawSrc.trim();
+    if (!trimmed || trimmed.startsWith('//')) {
+      return false;
+    }
+
+    const schemeMatch = trimmed.match(/^[a-zA-Z][\w+.-]*:/);
+    if (!schemeMatch) {
+      return true;
+    }
+
+    const scheme = schemeMatch[0].slice(0, -1).toLowerCase();
+    return scheme === 'http' || scheme === 'https';
+  };
+
+  md = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, body) => {
     let altText = alt;
     const classes = ['md-image'];
 
@@ -19,11 +41,24 @@ export function renderMarkdown(md: string): string {
       classes.push('md-image-right');
     }
 
-    const cleanAlt = altText.replace(/"/g, '&quot;');
-    const cleanSrc = src.trim();
-    const cleanTitle = title ? title.replace(/"/g, '&quot;') : '';
-    const titleAttr = cleanTitle ? ` title="${cleanTitle}"` : '';
+    const trimmedBody = body.trim();
+    const titleMatch = trimmedBody.match(/\s+"([^"]+)"\s*$/);
+    const title = titleMatch ? titleMatch[1] : '';
+    const src = titleMatch
+      ? trimmedBody.slice(0, trimmedBody.length - titleMatch[0].length).trim()
+      : trimmedBody;
+
+    const cleanAlt = escapeAttribute(altText);
     const classAttr = ` class="${classes.join(' ')}"`;
+
+    if (!src || /\s/.test(src) || !isAllowedSrc(src)) {
+      const placeholderLabel = cleanAlt || 'Unsupported image reference';
+      return `<span${classAttr} data-md-image-placeholder="true" aria-label="${placeholderLabel}"></span>`;
+    }
+
+    const cleanSrc = escapeAttribute(src);
+    const cleanTitle = title ? escapeAttribute(title) : '';
+    const titleAttr = cleanTitle ? ` title="${cleanTitle}"` : '';
 
     return `<img src="${cleanSrc}" alt="${cleanAlt}" loading="lazy"${classAttr}${titleAttr} />`;
   });
@@ -55,7 +90,7 @@ export function renderMarkdown(md: string): string {
   const lines = md.split(/\n\n+/);
   const html = lines
     .map((block) => {
-      if (/^<h\d|^<ul>|^<\/ul>|^<li>|^<blockquote>|^<p>|^<details>|^<summary>|^<img/.test(block)) {
+      if (/^<h\d|^<ul>|^<\/ul>|^<li>|^<blockquote>|^<p>|^<details>|^<summary>|^<img|^<span/.test(block)) {
         return block;
       }
       return `<p class=\"mt-2\">${block.replace(/\n/g, '<br/>')}<\/p>`;

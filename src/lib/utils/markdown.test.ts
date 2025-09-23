@@ -28,5 +28,24 @@ describe('renderMarkdown', () => {
     expect(html).toContain('&lt;script&gt;alert(1)&lt;/script&gt;');
     expect(html).not.toContain('<script>');
   });
+
+  it('escapes image sources to prevent attribute injection', () => {
+    const html = renderMarkdown('![x](https://example.com" onerror="alert(1))');
+    expect(html).not.toContain('<img');
+    expect(html).toContain('data-md-image-placeholder="true"');
+    expect(html).not.toContain('onerror');
+  });
+
+  it('html-escapes quotes inside image src attributes', () => {
+    const html = renderMarkdown('![x](https://example.com?foo="bar")');
+    expect(html).toContain('<img');
+    expect(html).toContain('src="https://example.com?foo=&quot;bar&quot;"');
+  });
+
+  it('rejects disallowed image schemes', () => {
+    const html = renderMarkdown('![x](javascript:alert(1))');
+    expect(html).not.toContain('<img');
+    expect(html).toContain('data-md-image-placeholder="true"');
+  });
 });
 

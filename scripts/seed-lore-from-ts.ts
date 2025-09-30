@@ -9,7 +9,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const rootDir = join(__dirname, '..');
 const contentRoot = join(rootDir, 'content', 'characters', 'tundra');
 
-function ensureDir(path: string) {
+function ensureDir(path: string): void {
   mkdirSync(path, { recursive: true });
 }
 
@@ -21,13 +21,13 @@ function slugify(input: string): string {
     .replace(/-{2,}/g, '-');
 }
 
-function writeFile(relativePath: string, body: string) {
+function writeFile(relativePath: string, body: string): void {
   const target = join(contentRoot, relativePath);
   ensureDir(dirname(target));
   writeFileSync(target, body, 'utf8');
 }
 
-function exportCharacter() {
+function exportCharacter(): void {
   const { hero, dossier } = tundraKarsvaldr;
   const frontMatter = {
     id: 'tundra-karsvaldr',
@@ -39,7 +39,7 @@ function exportCharacter() {
   writeFile('character.md', document);
 }
 
-function exportHistory() {
+function exportHistory(): void {
   const historyDir = 'history';
   ensureDir(join(contentRoot, historyDir));
 
@@ -55,7 +55,7 @@ function exportHistory() {
   });
 }
 
-function exportTimeline() {
+function exportTimeline(): void {
   const timelineDir = 'timeline';
   ensureDir(join(contentRoot, timelineDir));
 
@@ -71,7 +71,7 @@ function exportTimeline() {
   });
 }
 
-function exportLogs() {
+function exportLogs(): void {
   const logsDir = 'logs';
   ensureDir(join(contentRoot, logsDir));
 

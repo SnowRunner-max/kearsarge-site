@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fg from 'fast-glob';
-import matter from 'gray-matter';
+import matter, { type GrayMatterFile } from 'gray-matter';
 import { z } from 'zod';
 
 import type { CharacterPageData } from '../src/lib/types/character';
@@ -119,11 +119,11 @@ type CharacterRecord = {
   bundle: CharacterLoreBundle;
 };
 
-function ensureDir(path: string) {
+function ensureDir(path: string): void {
   mkdirSync(path, { recursive: true });
 }
 
-function readMarkdown(filePath: string) {
+function readMarkdown(filePath: string): GrayMatterFile<string> {
   const raw = readFileSync(filePath, 'utf8');
   return matter(raw);
 }
@@ -334,7 +334,7 @@ function buildCharacterRecord(folderRelativePath: string): CharacterRecord {
   };
 }
 
-function writeCharacterModule(record: CharacterRecord) {
+function writeCharacterModule(record: CharacterRecord): void {
   const pascalName = pascalCaseFromSlug(record.id);
   const tsLiteral = serializeAsTs(record.bundle);
   const moduleContents = `import type { CharacterLoreBundle } from '$lib/types/lore';\n\nexport const ${pascalName}Bundle = ${tsLiteral} as const satisfies CharacterLoreBundle;\n\nexport const ${pascalName}Character = ${pascalName}Bundle.character;\nexport const ${pascalName}ContextSlices = ${pascalName}Bundle.contextSlices;\n`; // trailing newline automatically
@@ -344,7 +344,7 @@ function writeCharacterModule(record: CharacterRecord) {
   writeFileSync(targetPath, moduleContents, 'utf8');
 }
 
-function writeIndexModule(records: CharacterRecord[]) {
+function writeIndexModule(records: CharacterRecord[]): void {
   const importLines = records
     .map((record) => {
       const pascalName = pascalCaseFromSlug(record.id);
@@ -362,7 +362,7 @@ function writeIndexModule(records: CharacterRecord[]) {
   writeFileSync(join(generatedRoot, 'index.ts'), indexContents, 'utf8');
 }
 
-(async function build() {
+(async function build(): Promise<void> {
   ensureDir(generatedCharactersRoot);
 
   const characterFolders = fg.sync('*', {

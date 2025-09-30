@@ -11,8 +11,12 @@
   type TyriumTab = 'field-guide';
   let active: Tab = 'overview';
   let tyriumActive: TyriumTab = 'field-guide';
-  const setActive = (id: Tab) => (active = id);
-  const setTyriumActive = (id: TyriumTab) => (tyriumActive = id);
+  const setActive = (id: Tab): void => {
+    active = id;
+  };
+  const setTyriumActive = (id: TyriumTab): void => {
+    tyriumActive = id;
+  };
 
   const aliases = character.dossier.identification.aliases.join(', ');
   const height = character.dossier.identification.appearance.height;
@@ -35,14 +39,14 @@
   let chatMessages: ChatMessage[] = [...initialChatMessages];
   let chatProcessing = false;
 
-  function trimChatMessages() {
+  function trimChatMessages(): void {
     const windowSize = MAX_CHAT_HISTORY * 2;
     if (chatMessages.length > windowSize) {
       chatMessages = chatMessages.slice(-windowSize);
     }
   }
 
-  async function handleChatSend(event: CustomEvent<{ message: string }>) {
+  async function handleChatSend(event: CustomEvent<{ message: string }>): Promise<void> {
     const userMessage = event.detail.message;
     const history = chatMessages.slice(-MAX_CHAT_HISTORY);
 

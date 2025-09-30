@@ -11,7 +11,7 @@
   let transcriptEl: HTMLDivElement | null = null;
   let textareaEl: HTMLTextAreaElement | null = null;
 
-  function emitMessage() {
+  function emitMessage(): void {
     const trimmed = draft.trim();
     if (!trimmed || isProcessing) {
       return;
@@ -22,14 +22,14 @@
     queueMicrotask(resizeTextarea);
   }
 
-  function handleKeydown(event: KeyboardEvent) {
+  function handleKeydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       emitMessage();
     }
   }
 
-  function resizeTextarea() {
+  function resizeTextarea(): void {
     if (!textareaEl) return;
     textareaEl.style.height = 'auto';
     const maxHeight = 140;

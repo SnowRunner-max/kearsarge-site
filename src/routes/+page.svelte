@@ -32,7 +32,7 @@
     {
       role: 'assistant',
       content:
-        '*Bench rack still rattling, frost trailing from my fur.* Took five plates a side for a ride. You catching this, or coming down to spot me?'
+        'Tundra leaned back in the sauna, arms stretched out over the heat-soaked wood. He looked like he didn\'t have a care in the world. That broad grin, an ever broader chest, and legs spread casually wide--that confidence dripped from him like sweat from his chin. His head tilted to the side as the door to the sauna opened, a stranger wandering in. The malamute\'s eyes caught the warm light of the heated room.'
     }
   ];
 

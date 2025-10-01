@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { ChatMessage } from '$lib/types/chat';
 import { requestCompletion } from '$lib/server/llm/llama';
@@ -40,7 +40,11 @@ function sanitizeHistory(history: unknown): ChatMessage[] {
     .slice(-MAX_HISTORY_MESSAGES);
 }
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
+  if (!locals.user) {
+    throw error(401, 'Authentication required.');
+  }
+
   let payload: RawChatPayload;
 
   try {
@@ -69,7 +73,9 @@ export const POST: RequestHandler = async ({ request }) => {
 
   try {
     const completion = await requestCompletion({ prompt });
-    const responseText = completion || 'Tundra tilts his head,"I lost the thread there -- give me another cue?"';
+    const fallbackResponse =
+      '*Tundra tilts his head.* I lost the thread there -- give me another cue?';
+    const responseText = completion || fallbackResponse;
 
     return json({ response: responseText });
   } catch (error) {

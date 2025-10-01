@@ -69,7 +69,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
   try {
     const completion = await requestCompletion({ prompt });
-    const responseText = completion || '*Tundra tilts his head.* I lost the thread there -- give me another cue?';
+    const responseText = completion || 'Tundra tilts his head,"I lost the thread there -- give me another cue?"';
 
     return json({ response: responseText });
   } catch (error) {

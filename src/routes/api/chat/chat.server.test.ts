@@ -9,14 +9,16 @@ import { POST } from './+server';
 
 const requestCompletionMock = vi.mocked(requestCompletion);
 
-function createRequest(body: unknown): Request {
-  return new Request('http://localhost/api/chat', {
+function createEvent(body: unknown): { request: Request; locals: { user: { id: string } } } {
+  const request = new Request('http://localhost/api/chat', {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
     },
     body: typeof body === 'string' ? body : JSON.stringify(body)
   });
+
+  return { request, locals: { user: { id: 'test-user' } } };
 }
 
 describe('POST /api/chat', () => {
@@ -24,15 +26,22 @@ describe('POST /api/chat', () => {
     requestCompletionMock.mockReset();
   });
 
+  it('returns 401 when the request is not authenticated', async () => {
+    await expect(() => POST({ request: createEvent({ message: 'Hello' }).request, locals: { user: null } } as any)).rejects.toHaveProperty(
+      'status',
+      401
+    );
+  });
+
   it('returns 400 when the payload is not valid JSON', async () => {
-    const response = await POST({ request: createRequest('{') } as any);
+    const response = await POST(createEvent('{') as any);
 
     expect(response.status).toBe(400);
     await expect(response.json()).resolves.toEqual({ error: 'Invalid JSON payload.' });
   });
 
   it('returns 400 when the message is missing or blank', async () => {
-    const response = await POST({ request: createRequest({ message: '   ' }) } as any);
+    const response = await POST(createEvent({ message: '   ' }) as any);
 
     expect(response.status).toBe(400);
     await expect(response.json()).resolves.toEqual({ error: 'Message is required.' });
@@ -54,12 +63,10 @@ describe('POST /api/chat', () => {
     ];
 
     const response = await POST(
-      {
-        request: createRequest({
-          message: '   Let\'s talk power.  ',
-          history: rawHistory
-        })
-      } as any
+      createEvent({
+        message: "   Let's talk power.  ",
+        history: rawHistory
+      }) as any
     );
 
     expect(response.status).toBe(200);
@@ -78,7 +85,7 @@ describe('POST /api/chat', () => {
   it('falls back to a canned line when llama.cpp returns an empty string', async () => {
     requestCompletionMock.mockResolvedValue('');
 
-    const response = await POST({ request: createRequest({ message: 'Hello' }) } as any);
+    const response = await POST(createEvent({ message: 'Hello' }) as any);
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({
@@ -90,7 +97,7 @@ describe('POST /api/chat', () => {
     requestCompletionMock.mockRejectedValue(new Error('offline'));
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    const response = await POST({ request: createRequest({ message: 'Test' }) } as any);
+    const response = await POST(createEvent({ message: 'Test' }) as any);
 
     expect(response.status).toBe(502);
     await expect(response.json()).resolves.toEqual({ error: 'Unable to contact Tyrium relay.' });

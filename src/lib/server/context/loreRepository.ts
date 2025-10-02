@@ -1,4 +1,4 @@
-import { characterLoreBundles, characterLoreById } from '$lib/generated';
+import { getCharacterLoreBundle, listCharacterSummaries } from '$lib/server/lore/characterRepository';
 import type { CharacterLoreBundle, ContextSlice } from '$lib/types/lore';
 
 const BASE_PRIORITY: Record<ContextSlice['source'], number> = {
@@ -8,12 +8,17 @@ const BASE_PRIORITY: Record<ContextSlice['source'], number> = {
   log: 3
 };
 
-export function listCharacterLore(): CharacterLoreBundle[] {
-  return [...characterLoreBundles];
+export async function listCharacterLore(): Promise<CharacterLoreBundle[]> {
+  const summaries = await listCharacterSummaries();
+  const bundles = await Promise.all(
+    summaries.map(async (summary) => getCharacterLoreBundle(summary.slug))
+  );
+  return bundles.filter((bundle): bundle is CharacterLoreBundle => bundle !== null);
 }
 
-export function getCharacterLore(id: string): CharacterLoreBundle | undefined {
-  return characterLoreById.get(id);
+export async function getCharacterLore(id: string): Promise<CharacterLoreBundle | null> {
+  const bundle = await getCharacterLoreBundle(id);
+  return bundle ?? null;
 }
 
 function tokenize(input: string): string[] {
@@ -52,13 +57,13 @@ export interface ContextSliceQuery {
   tags?: string[];
 }
 
-export function getContextSlicesForPrompt({
+export async function getContextSlicesForPrompt({
   characterId,
   query,
   limit = 4,
   tags
-}: ContextSliceQuery): ContextSlice[] {
-  const bundle = getCharacterLore(characterId);
+}: ContextSliceQuery): Promise<ContextSlice[]> {
+  const bundle = await getCharacterLore(characterId);
   if (!bundle) {
     return [];
   }

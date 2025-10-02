@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "lore:build": "tsx scripts/build-lore.ts",
-    "lore:seed": "tsx scripts/seed-lore-from-ts.ts",
+    "lore:seed": "tsx scripts/seed-lore.ts",
     "predev": "npm run lore:build && svelte-kit sync",
     "dev": "vite dev",
     "prebuild": "npm run lore:build && svelte-kit sync",

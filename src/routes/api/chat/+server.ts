@@ -59,11 +59,11 @@ export const POST: RequestHandler = async ({ request, locals }) => {
   }
 
   const history = sanitizeHistory(payload.history);
-  const contextSlices = getContextSlicesForPrompt({
+  const contextSlices = (await getContextSlicesForPrompt({
     characterId: CHARACTER_ID,
     query: message,
     limit: 4
-  }).map((slice) => `# ${slice.title}\n${slice.content}`);
+  })).map((slice) => `# ${slice.title}\n${slice.content}`);
 
   const prompt = buildChatPrompt({
     userMessage: message,

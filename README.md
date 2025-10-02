@@ -27,6 +27,8 @@ Interactive dossier for Tundra Seyfert and Tyrium research. The site now include
    | Variable | Description | Default |
    | --- | --- | --- |
    | `LLAMA_CPP_URL` | Base URL for the llama.cpp HTTP server | `http://localhost:8080` |
+   | `SUPABASE_URL` | Supabase project URL from Project Settings → API | — |
+   | `SUPABASE_ANON_KEY` | Supabase anon/public API key from the same page | — |
 
 3. Start llama.cpp. A helper script is included and defaults to the Cydonia model stored at `/home/tjb/Models/TheDrummer_Cydonia-24B-v4.1-Q5_K_M.gguf`.
 
@@ -45,6 +47,24 @@ Interactive dossier for Tundra Seyfert and Tyrium research. The site now include
    ```bash
    npm run dev
    ```
+
+## Supabase Authentication
+
+Supabase backs the login/signup flow and guards the chat API. Configure it before attempting to access the dossier outside of `/login`:
+
+1. Create or sign into [Supabase](https://supabase.com/), then create a new project. Follow the “Create a project” steps in Supabase docs if you need a refresher on organization/billing requirements.
+2. In Supabase Studio open **Project Settings → API** and copy the **Project URL** and **anon public** key. Paste them into `SUPABASE_URL` and `SUPABASE_ANON_KEY` in your `.env`, then restart the dev server so SvelteKit sees the new variables.
+3. Go to **Authentication → Providers → Email**. Enable the provider, ensure “Disable email signups” is off, and (for dev) disable email confirmations so `/auth/v1/signup` returns a session immediately. Re-enable confirmation later if you need verified accounts.
+4. In **Authentication → URL Configuration** add your dev origin `http://localhost:5173` (and any production hosts) to the redirect allow-list.
+5. Optional but recommended: check **Authentication → Providers → Email → Advanced** to confirm hCaptcha/recaptcha are disabled unless you plan to supply tokens from the frontend.
+
+### How the site uses Supabase
+
+- `src/routes/login/+page.svelte` posts to `/api/auth/signup` and `/api/auth/login`, which proxy to Supabase’s REST API (`src/routes/api/auth/*`).
+- `src/hooks.server.ts` resolves cookies issued by Supabase so authenticated users populate `event.locals` on every request.
+- `src/routes/+layout.server.ts` redirects unauthenticated visitors to `/login`, and the chat endpoint at `src/routes/api/chat/+server.ts` rejects requests unless a Supabase user is present.
+
+If you change Supabase policies or introduce additional tables, update the auth helper in `src/lib/server/auth/supabase.ts` and the client-side form accordingly.
 
 ## Chat Architecture
 

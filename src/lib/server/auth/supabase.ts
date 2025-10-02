@@ -151,8 +151,11 @@ export async function signUpWithEmail({
     throw new SupabaseAuthError(message, response.status);
   }
 
-  const sessionPayload = payload.session as SupabaseSessionPayload | undefined;
-  if (!sessionPayload || !payload.user) {
+  const sessionPayload =
+    (payload?.session as SupabaseSessionPayload | undefined) ??
+    (typeof payload?.access_token === 'string' ? (payload as SupabaseSessionPayload) : undefined);
+
+  if (!sessionPayload || !payload?.user) {
     throw new SupabaseAuthError('Supabase signup did not return a session.', 500);
   }
 

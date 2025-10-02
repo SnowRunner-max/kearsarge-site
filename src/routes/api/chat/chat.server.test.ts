@@ -4,6 +4,19 @@ vi.mock('$lib/server/llm/llama', () => ({
   requestCompletion: vi.fn()
 }));
 
+vi.mock('$lib/server/context/loreRepository', () => ({
+  getContextSlicesForPrompt: vi.fn().mockResolvedValue([
+    {
+      id: 'test-slice',
+      characterId: 'tundra-karsvaldr',
+      source: 'dossier',
+      title: 'Test Slice',
+      content: 'Unit test context',
+      tags: ['test']
+    }
+  ])
+}));
+
 import { requestCompletion } from '$lib/server/llm/llama';
 import { POST } from './+server';
 

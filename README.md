@@ -29,6 +29,10 @@ Interactive dossier for Tundra Seyfert and Tyrium research. The site now include
    | `LLAMA_CPP_URL` | Base URL for the llama.cpp HTTP server | `http://localhost:8080` |
    | `SUPABASE_URL` | Supabase project URL from Project Settings → API | — |
    | `SUPABASE_ANON_KEY` | Supabase anon/public API key from the same page | — |
+   | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key for server-side data access | — |
+   | `SUPABASE_LORE_OWNER_ID` | `auth.users.id` that owns seeded lore content | — |
+   | `SUPABASE_LORE_OWNER_USERNAME` | Display username for the lore owner profile | `lore-admin` |
+   | `SUPABASE_LORE_OWNER_DISPLAY_NAME` | Display name for the lore owner profile | `Lore Admin` |
 
 3. Start llama.cpp. A helper script is included and defaults to the Cydonia model stored at `/home/tjb/Models/TheDrummer_Cydonia-24B-v4.1-Q5_K_M.gguf`.
 
@@ -58,6 +62,16 @@ Supabase backs the login/signup flow and guards the chat API. Configure it befor
 4. In **Authentication → URL Configuration** add your dev origin `http://localhost:5173` (and any production hosts) to the redirect allow-list.
 5. Optional but recommended: check **Authentication → Providers → Email → Advanced** to confirm hCaptcha/recaptcha are disabled unless you plan to supply tokens from the frontend.
 
+6. Run the migration in `supabase/migrations/20241025000000_create_lore_schema.sql` (or apply it through Supabase Studio) to create the application tables.
+
+7. Use the provided seed script to load Markdown lore into Supabase. The script requires the service role key and a user ID that already exists in `auth.users`.
+
+   ```bash
+   npm run lore:seed
+   ```
+
+   The script upserts the owner profile, characters, and lore entries while preserving the context slice tags used for chat grounding.
+
 ### How the site uses Supabase
 
 - `src/routes/login/+page.svelte` posts to `/api/auth/signup` and `/api/auth/login`, which proxy to Supabase’s REST API (`src/routes/api/auth/*`).
@@ -84,6 +98,6 @@ Conversation history is kept in-memory on the client; the server caps history to
 ## Lore Content Pipeline
 
 - Author editable lore inside `content/` (e.g. `content/characters/tundra`). Each section lives in Markdown with YAML front matter.
-- Run `npm run lore:build` to regenerate TypeScript bundles in `src/lib/generated/`. This now happens automatically before `dev`/`build`.
-- Use `npm run lore:seed` once if you need to regenerate the Markdown files from the legacy TypeScript source.
-- Generated bundles expose characters and context slices which power both the dossier UI and chat grounding.
+- Run `npm run lore:build` to validate the Markdown set and refresh `.cache/lore-preview.json`. This happens automatically before `dev`/`build`.
+- Use `npm run lore:seed` to import Markdown lore into Supabase. The seed preserves chat context tags and overwrites existing lore entries for each character.
+- Application routes and chat context now read from Supabase instead of generated TypeScript bundles.

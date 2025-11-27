@@ -6,6 +6,6 @@ export default defineConfig({
   // Lightweight unit test harness via Vitest
   test: {
     environment: 'node',
-    include: ['src/**/*.{test,spec}.{ts,js}']
+    include: ['src/**/*.{test,spec}.{ts,js}', 'tests/**/*.{test,spec}.{ts,js}']
   }
 });

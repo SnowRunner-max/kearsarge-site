@@ -4,7 +4,10 @@
   import Panel from '$lib/components/ui/Panel.svelte';
   import DataRow from '$lib/components/ui/DataRow.svelte';
   import TabButton from '$lib/components/ui/TabButton.svelte';
-  import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+  $: character = data.character;
   import { tyriumFieldGuide } from '$lib/data/tyrium/field-guide';
   import { renderMarkdown } from '$lib/utils/markdown';
   import { sendChatMessage } from '$lib/client/chat';
@@ -21,12 +24,12 @@
     tyriumActive = id;
   };
 
-  const aliases = character.dossier.identification.aliases.join(', ');
-  const height = character.dossier.identification.appearance.height;
-  const weight = character.dossier.identification.appearance.weight;
-  const combatClass = character.dossier.combatClass;
-  const currentStatus = character.dossier.currentStatus;
-  const vessel = character.dossier.vessel;
+  $: aliases = character.dossier.identification.aliases.join(', ');
+  $: height = character.dossier.identification.appearance.height;
+  $: weight = character.dossier.identification.appearance.weight;
+  $: combatClass = character.dossier.combatClass;
+  $: currentStatus = character.dossier.currentStatus;
+  $: vessel = character.dossier.vessel;
   const traits = 'Tyrium enhancements, cryo-kinetics'; // summarize from existing content
   const heroImg = '/images/tundra-karsvaldr.png'; // optional image
 

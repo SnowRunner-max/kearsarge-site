@@ -1,5 +1,6 @@
-import { characterLoreBundles, characterLoreById } from '$lib/generated';
-import type { CharacterLoreBundle, ContextSlice } from '$lib/types/lore';
+import { getCharacter } from '$lib/server/lore';
+import { buildContextSlices } from '$lib/server/lore/slices';
+import type { ContextSlice } from '$lib/types/lore';
 
 const BASE_PRIORITY: Record<ContextSlice['source'], number> = {
   dossier: 0,
@@ -7,14 +8,6 @@ const BASE_PRIORITY: Record<ContextSlice['source'], number> = {
   timeline: 2,
   log: 3
 };
-
-export function listCharacterLore(): CharacterLoreBundle[] {
-  return [...characterLoreBundles];
-}
-
-export function getCharacterLore(id: string): CharacterLoreBundle | undefined {
-  return characterLoreById.get(id);
-}
 
 function tokenize(input: string): string[] {
   return input
@@ -52,21 +45,23 @@ export interface ContextSliceQuery {
   tags?: string[];
 }
 
-export function getContextSlicesForPrompt({
+export async function getContextSlicesForPrompt({
   characterId,
   query,
   limit = 4,
   tags
-}: ContextSliceQuery): ContextSlice[] {
-  const bundle = getCharacterLore(characterId);
-  if (!bundle) {
+}: ContextSliceQuery): Promise<ContextSlice[]> {
+  const character = await getCharacter(characterId);
+  if (!character) {
     return [];
   }
 
+  const slices = buildContextSlices(characterId, character);
+
   const tokens = query ? tokenize(query) : [];
   const filteredByTags = tags && tags.length > 0
-    ? bundle.contextSlices.filter((slice) => tags.every((tag) => slice.tags.includes(tag)))
-    : bundle.contextSlices;
+    ? slices.filter((slice) => tags.every((tag) => slice.tags.includes(tag)))
+    : slices;
 
   const ranked = filteredByTags
     .map((slice) => ({
@@ -97,7 +92,7 @@ export function getContextSlicesForPrompt({
   }
 
   if (results.length < limit) {
-    const baseline = bundle.contextSlices
+    const baseline = slices
       .slice()
       .sort((a, b) => BASE_PRIORITY[a.source] - BASE_PRIORITY[b.source]);
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DEFAULT_MODEL="/home/tjb/Models/TheDrummer_Cydonia-24B-v4.1-Q5_K_M.gguf"
+DEFAULT_MODEL="/home/tjbermant/models/TheDrummer_Cydonia-24B-v4.1-Q5_K_S.gguf"
 MODEL_PATH="${1:-$DEFAULT_MODEL}"
 
 if [[ ! -f "$MODEL_PATH" ]]; then

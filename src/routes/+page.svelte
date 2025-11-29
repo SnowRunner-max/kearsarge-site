@@ -1,6 +1,9 @@
 <script lang="ts">
   import Timeline from '$lib/components/Timeline.svelte';
   import TundraChat from '$lib/components/TundraChat.svelte';
+  import Panel from '$lib/components/ui/Panel.svelte';
+  import DataRow from '$lib/components/ui/DataRow.svelte';
+  import TabButton from '$lib/components/ui/TabButton.svelte';
   import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
   import { tyriumFieldGuide } from '$lib/data/tyrium/field-guide';
   import { renderMarkdown } from '$lib/utils/markdown';
@@ -11,8 +14,8 @@
   type TyriumTab = 'field-guide';
   let active: Tab = 'overview';
   let tyriumActive: TyriumTab = 'field-guide';
-  const setActive = (id: Tab): void => {
-    active = id;
+  const setActive = (id: string): void => {
+    active = id as Tab;
   };
   const setTyriumActive = (id: TyriumTab): void => {
     tyriumActive = id;
@@ -82,246 +85,236 @@
   <title>Seyfert Index // TUNDRA</title>
 </svelte:head>
 
-<header>
-  <div class="bar">
-    <div class="brand">
-      <div class="glyph" aria-hidden="true"></div>
-      <div class="title">Seyfert Index // TUNDRA</div>
+<header class="sticky top-0 z-40 border-b-2 border-gold bg-gradient-to-b from-panel-2 to-[#171717f5] backdrop-blur-[4px] backdrop-saturate-[1.2]">
+  <div class="mx-auto flex max-w-site items-center justify-between px-5 py-4">
+    <div class="flex items-center gap-3">
+      <div class="relative h-[26px] w-[26px] -skew-x-12 border-2 border-gold after:absolute after:-right-[6px] after:-top-[6px] after:h-0 after:w-0 after:border-b-[12px] after:border-l-[12px] after:border-t-[12px] after:border-b-transparent after:border-l-transparent after:border-t-gold after:drop-shadow-[0_0_6px_rgba(226,176,7,.35)]" aria-hidden="true"></div>
+      <div class="font-oswald font-semibold uppercase tracking-[0.12em]">Seyfert Index // TUNDRA</div>
     </div>
-    <div class="actions">
-      <div class="chip">Classification: {character.dossier.classificationLevel}</div>
-      <div class="chip">Last Update: {character.dossier.lastUpdate}</div>
+    <div class="flex gap-3">
+      <div class="border border-line px-2 py-1 text-[0.8rem] text-muted">Classification: {character.dossier.classificationLevel}</div>
+      <div class="border border-line px-2 py-1 text-[0.8rem] text-muted">Last Update: {character.dossier.lastUpdate}</div>
     </div>
   </div>
-  <div class="tabs" role="tablist" aria-label="Sections">
-    <button class="tab" role="tab" aria-selected={active === 'overview'} aria-controls="overview" id="tab-overview" on:click={() => setActive('overview')}>Overview</button>
-    <button class="tab" role="tab" aria-selected={active === 'chat'} aria-controls="chat" id="tab-chat" on:click={() => setActive('chat')}>Chat</button>
-    <button class="tab" role="tab" aria-selected={active === 'dossier'} aria-controls="dossier" id="tab-dossier" on:click={() => setActive('dossier')}>Dossier</button>
-    <button class="tab" role="tab" aria-selected={active === 'history'} aria-controls="history" id="tab-history" on:click={() => setActive('history')}>History</button>
-    <button class="tab" role="tab" aria-selected={active === 'tyrium'} aria-controls="tyrium" id="tab-tyrium" on:click={() => setActive('tyrium')}>Tyrium</button>
-    <button class="tab" role="tab" aria-selected={active === 'logs'} aria-controls="logs" id="tab-logs" on:click={() => setActive('logs')}>Logs</button>
+  <div class="mx-auto flex max-w-site flex-wrap gap-4 px-5 pb-3" role="tablist" aria-label="Sections">
+    <TabButton id="overview" label="Overview" active={active === 'overview'} on:click={(e) => setActive(e.detail)} />
+    <TabButton id="chat" label="Chat" active={active === 'chat'} on:click={(e) => setActive(e.detail)} />
+    <TabButton id="dossier" label="Dossier" active={active === 'dossier'} on:click={(e) => setActive(e.detail)} />
+    <TabButton id="history" label="History" active={active === 'history'} on:click={(e) => setActive(e.detail)} />
+    <TabButton id="tyrium" label="Tyrium" active={active === 'tyrium'} on:click={(e) => setActive(e.detail)} />
+    <TabButton id="logs" label="Logs" active={active === 'logs'} on:click={(e) => setActive(e.detail)} />
   </div>
 </header>
 
-<main>
+<main class="mx-auto max-w-site px-5 py-4 pb-12">
   <!-- OVERVIEW -->
   <div id="overview" role="tabpanel" aria-labelledby="tab-overview" hidden={active !== 'overview'}>
-    <h2 class="secthead">Overview</h2>
-    <div class="grid">
-      <div class="panel heroimg" aria-label="Main character image" style={`background-image:url('${heroImg}')`}></div>
-      <aside class="panel facts">
-        <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">Quick Facts</h3>
-        <dl>
-          <dt>Name</dt><dd>{character.hero.name}</dd>
-          <dt>Alias</dt><dd>{aliases}</dd>
-          <dt>Height</dt><dd>{height}</dd>
-          <dt>Weight</dt><dd>{weight}</dd>
-          <dt>Class</dt><dd>{combatClass}</dd>
-          <dt>Traits</dt><dd>{traits}</dd>
+    <h2 class="mb-3 font-oswald text-gold uppercase tracking-[0.14em]">Overview</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-[2fr_1fr]">
+      <div class="relative aspect-[4/5] border border-line bg-[#0f0f0f] bg-cover bg-center before:absolute before:-right-[1px] before:-top-[1px] before:h-0 before:w-0 before:border-b-[22px] before:border-l-[22px] before:border-t-[22px] before:border-b-transparent before:border-l-transparent before:border-t-gold before:drop-shadow-[0_0_6px_rgba(226,176,7,.3)]" aria-label="Main character image" style={`background-image:url('${heroImg}')`}></div>
+      <Panel class="p-4">
+        <h3 class="mb-2 font-oswald tracking-[0.1em] text-white uppercase">Quick Facts</h3>
+        <dl class="m-0 grid grid-cols-2 gap-x-4 gap-y-2">
+          <dt class="text-muted">Name</dt><dd class="m-0 text-white">{character.hero.name}</dd>
+          <dt class="text-muted">Alias</dt><dd class="m-0 text-white">{aliases}</dd>
+          <dt class="text-muted">Height</dt><dd class="m-0 text-white">{height}</dd>
+          <dt class="text-muted">Weight</dt><dd class="m-0 text-white">{weight}</dd>
+          <dt class="text-muted">Class</dt><dd class="m-0 text-white">{combatClass}</dd>
+          <dt class="text-muted">Traits</dt><dd class="m-0 text-white">{traits}</dd>
         </dl>
-        <div class="badges">
-          <span class="badge">Status: {currentStatus.status}</span>
-          <span class="badge">Classification: {currentStatus.classification}</span>
-          <span class="badge">Region: {currentStatus.region}</span>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="border border-line px-2 py-1 text-[0.75rem] text-gold">Status: {currentStatus.status}</span>
+          <span class="border border-line px-2 py-1 text-[0.75rem] text-gold">Classification: {currentStatus.classification}</span>
+          <span class="border border-line px-2 py-1 text-[0.75rem] text-gold">Region: {currentStatus.region}</span>
         </div>
-      </aside>
+      </Panel>
     </div>
   </div>
 
   <!-- CHAT -->
   <div id="chat" role="tabpanel" aria-labelledby="tab-chat" hidden={active !== 'chat'}>
-    <h2 class="secthead">Tundra Link</h2>
-    <div class="chat-wrap">
+    <h2 class="mb-3 font-oswald text-gold uppercase tracking-[0.14em]">Tundra Link</h2>
+    <div class="mx-auto my-6 max-w-[840px]">
       <TundraChat messages={chatMessages} isProcessing={chatProcessing} on:sendMessage={handleChatSend} />
     </div>
   </div>
 
   <!-- DOSSIER -->
   <div id="dossier" role="tabpanel" aria-labelledby="tab-dossier" hidden={active !== 'dossier'}>
-    <h2 class="secthead">Dossier</h2>
-    <div class="shell">
-      <div class="panel block full">
-        <div class="head"><strong>Identity</strong></div>
-        <div class="body twocol">
-          <div class="kv"><div class="k">Name</div><div>{character.hero.name}</div></div>
-          <div class="kv"><div class="k">Aliases</div><div>{aliases}</div></div>
-          <div class="kv"><div class="k">Species/Origin</div><div>{character.dossier.identification.speciesOrigin}</div></div>
-          <div class="kv"><div class="k">Gender</div><div>{character.dossier.identification.gender}</div></div>
-          <div class="kv"><div class="k">Classification</div><div>{character.dossier.classificationLevel}</div></div>
-          <div class="kv"><div class="k">File Origin</div><div>{character.dossier.fileOrigin}</div></div>
-          <div class="kv"><div class="k">Last Update</div><div>{character.dossier.lastUpdate}</div></div>
-          <div class="kv"><div class="k">Subject</div><div>{character.dossier.subject}</div></div>
+    <h2 class="mb-3 font-oswald text-gold uppercase tracking-[0.14em]">Dossier</h2>
+    <div class="grid grid-cols-12 gap-4">
+      <Panel class="col-span-12" title="Identity">
+        <div class="grid grid-cols-2 gap-3 p-4">
+          <DataRow label="Name" value={character.hero.name} />
+          <DataRow label="Aliases" value={aliases} />
+          <DataRow label="Species/Origin" value={character.dossier.identification.speciesOrigin} />
+          <DataRow label="Gender" value={character.dossier.identification.gender} />
+          <DataRow label="Classification" value={character.dossier.classificationLevel} />
+          <DataRow label="File Origin" value={character.dossier.fileOrigin} />
+          <DataRow label="Last Update" value={character.dossier.lastUpdate} />
+          <DataRow label="Subject" value={character.dossier.subject} />
         </div>
-      </div>
+      </Panel>
 
-
-
-      <div class="panel block full">
-        <div class="head"><strong>Physiology / Metrics</strong></div>
-        <div class="body">
-          <table class="metrics" aria-label="Metrics table">
+      <Panel class="col-span-12" title="Physiology / Metrics">
+        <div class="p-4">
+          <table class="w-full min-w-[560px] border-collapse" aria-label="Metrics table">
             <thead>
-              <tr><th>Metric</th><th>Value</th></tr>
+              <tr><th class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top font-semibold text-white">Metric</th><th class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top font-semibold text-white">Value</th></tr>
             </thead>
             <tbody>
-              <tr><td>Height</td><td>{height}</td></tr>
-              <tr><td>Weight</td><td>{weight}</td></tr>
-              <tr><td>Build</td><td>{character.dossier.identification.appearance.build}</td></tr>
+              <tr><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">Height</td><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">{height}</td></tr>
+              <tr><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">Weight</td><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">{weight}</td></tr>
+              <tr><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">Build</td><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">{character.dossier.identification.appearance.build}</td></tr>
             </tbody>
           </table>
         </div>
-      </div>
+      </Panel>
 
-      <div class="panel block full">
-        <div class="head"><strong>Known Affiliations</strong></div>
-        <div class="body">
-          <div class="body twocol">
-            <div class="kv"><div class="k">Employers of Record</div><div>{character.dossier.affiliations.employersOfRecord.join(', ')}</div></div>
-            <div class="kv"><div class="k">Contacts</div><div>{character.dossier.affiliations.contacts.join(', ')}</div></div>
+      <Panel class="col-span-12" title="Known Affiliations">
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-3">
+            <DataRow label="Employers of Record" value={character.dossier.affiliations.employersOfRecord.join(', ')} />
+            <DataRow label="Contacts" value={character.dossier.affiliations.contacts.join(', ')} />
           </div>
-          <table class="metrics" aria-label="Faction relations">
+          <table class="w-full min-w-[560px] border-collapse" aria-label="Faction relations">
             <thead>
-              <tr><th>Faction</th><th>Relation</th></tr>
+              <tr><th class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top font-semibold text-white">Faction</th><th class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top font-semibold text-white">Relation</th></tr>
             </thead>
             <tbody>
               {#each character.dossier.affiliations.factionRelations as fr}
-                <tr><td>{fr.faction}</td><td>{fr.relation}</td></tr>
+                <tr><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">{fr.faction}</td><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">{fr.relation}</td></tr>
               {/each}
             </tbody>
           </table>
         </div>
-      </div>
+      </Panel>
 
-      <div class="panel block full">
-        <div class="head"><strong>Operational History</strong></div>
-        <div class="body">
-          <div class="body twocol">
-            <div class="kv"><div class="k">Notable Engagements</div><div>{character.dossier.operational.notableEngagements}</div></div>
-            <div class="kv"><div class="k">Confirmed Kills</div><div>{character.dossier.operational.confirmedKills}</div></div>
+      <Panel class="col-span-12" title="Operational History">
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-3">
+            <DataRow label="Notable Engagements" value={character.dossier.operational.notableEngagements} />
+            <DataRow label="Confirmed Kills" value={character.dossier.operational.confirmedKills} />
           </div>
-          <div class="body twocol">
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <h3 class="muted mb1">Specializations</h3>
-              <ul class="kvlist">
+              <h3 class="mb-2 text-muted">Specializations</h3>
+              <ul class="m-0 list-none p-0">
                 {#each character.dossier.operational.specializations as s}
-                  <li>{s}</li>
+                  <li class="mt-1">{s}</li>
                 {/each}
               </ul>
             </div>
             <div>
-              <h3 class="muted mb1">Reputation Markers</h3>
-              <ul class="kvlist">
+              <h3 class="mb-2 text-muted">Reputation Markers</h3>
+              <ul class="m-0 list-none p-0">
                 {#each character.dossier.operational.reputationMarkers as r}
-                  <li>{r}</li>
+                  <li class="mt-1">{r}</li>
                 {/each}
               </ul>
             </div>
           </div>
         </div>
-      </div>
+      </Panel>
 
-      <div class="panel block full">
-        <div class="head"><strong>Psychological / Behavior Profile</strong></div>
-        <div class="body">
-          <div class="body twocol">
+      <Panel class="col-span-12" title="Psychological / Behavior Profile">
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <h3 class="muted mb1">Temperament</h3>
-              <ul class="kvlist">
+              <h3 class="mb-2 text-muted">Temperament</h3>
+              <ul class="m-0 list-none p-0">
                 {#each character.dossier.psych.temperament as t}
-                  <li>{t}</li>
+                  <li class="mt-1">{t}</li>
                 {/each}
               </ul>
             </div>
             <div>
-              <h3 class="muted mb1">Motivations</h3>
-              <ul class="kvlist">
+              <h3 class="mb-2 text-muted">Motivations</h3>
+              <ul class="m-0 list-none p-0">
                 {#each character.dossier.psych.motivations as m}
-                  <li>{m}</li>
+                  <li class="mt-1">{m}</li>
                 {/each}
               </ul>
             </div>
           </div>
-          <div class="body twocol">
+          <div class="grid grid-cols-2 gap-3">
             <div>
-              <h3 class="muted mb1">Weaknesses</h3>
-              <ul class="kvlist">
+              <h3 class="mb-2 text-muted">Weaknesses</h3>
+              <ul class="m-0 list-none p-0">
                 {#each character.dossier.psych.weaknesses as w}
-                  <li>{w}</li>
+                  <li class="mt-1">{w}</li>
                 {/each}
               </ul>
             </div>
             <div>
-              <h3 class="muted mb1">Evaluation</h3>
-              <div class="muted">{@html renderMarkdown(character.dossier.psych.evaluation)}</div>
+              <h3 class="mb-2 text-muted">Evaluation</h3>
+              <div class="text-muted">{@html renderMarkdown(character.dossier.psych.evaluation)}</div>
             </div>
           </div>
         </div>
-      </div>
+      </Panel>
 
-      <div class="panel block full">
-        <div class="head"><strong>Threat Assessment</strong></div>
-        <div class="body">
-          <div class="body twocol">
-            <div class="kv"><div class="k">Combat Rating</div><div>{character.dossier.threat.combatRating}</div></div>
-            <div class="kv"><div class="k">Risk to Assets</div><div>{character.dossier.threat.riskToAssets}</div></div>
+      <Panel class="col-span-12" title="Threat Assessment">
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-3">
+            <DataRow label="Combat Rating" value={character.dossier.threat.combatRating} />
+            <DataRow label="Risk to Assets" value={character.dossier.threat.riskToAssets} />
           </div>
-          <div class="body">
-            <h3 class="muted mb1">Containment Options</h3>
-            <ul class="kvlist">
+          <div class="p-4">
+            <h3 class="mb-2 text-muted">Containment Options</h3>
+            <ul class="m-0 list-none p-0">
               {#each character.dossier.threat.containmentOptions as c}
-                <li>{c}</li>
+                <li class="mt-1">{c}</li>
               {/each}
             </ul>
-            <div class="kv"><div class="k">Recommendation</div><div>{character.dossier.threat.recommendation}</div></div>
+            <DataRow label="Recommendation" value={character.dossier.threat.recommendation} />
           </div>
         </div>
-      </div>
+      </Panel>
 
-      <div class="panel block full">
-        <div class="head"><strong>Augments / Anomalies</strong></div>
-        <div class="body">
-          <ul class="mb2">
+      <Panel class="col-span-12" title="Augments / Anomalies">
+        <div class="p-4">
+          <ul class="mb-4">
             <li>{character.dossier.identification.appearance.augmentations}</li>
             <li>Bio-illumination during heightened exertion</li>
             <li>Cryo-kinetic projection within limited range</li>
             <li>Weaponized channeling into melee implements</li>
             <li>Rapid hypertrophy, super-dense muscle tissue</li>
           </ul>
-          <div class="quote">“Subject exceeds prior benchmarks. Physical evolution occurs in discrete, violent bursts—often after combat.”</div>
+          <div class="border-l-[3px] border-gold px-4 py-2 italic text-[#e9e1c2]">“Subject exceeds prior benchmarks. Physical evolution occurs in discrete, violent bursts—often after combat.”</div>
         </div>
-      </div>
+      </Panel>
 
-      <div class="panel block full">
-        <div class="head"><strong>Transport / Vessel</strong></div>
-        <div class="body">
-          <div class="body twocol">
-            <div class="kv"><div class="k">Ship Class</div><div>{vessel.shipClass}</div></div>
-            <div class="kv"><div class="k">Designation</div><div>{vessel.designation}</div></div>
-            <div class="kv"><div class="k">Registration</div><div>{vessel.registryStatus}</div></div>
-            <div class="kv"><div class="k">Maintentance Condition</div><div>{vessel.maintenanceCondition}</div></div>
+      <Panel class="col-span-12" title="Transport / Vessel">
+        <div class="p-4">
+          <div class="grid grid-cols-2 gap-3">
+            <DataRow label="Ship Class" value={vessel.shipClass} />
+            <DataRow label="Designation" value={vessel.designation} />
+            <DataRow label="Registration" value={vessel.registryStatus} />
+            <DataRow label="Maintentance Condition" value={vessel.maintenanceCondition} />
           </div>
-          <table class="metrics" aria-label="Metrics table">
+          <table class="w-full min-w-[560px] border-collapse" aria-label="Metrics table">
             <thead>
-              <tr><th>Capability</th><th>Value</th></tr>
+              <tr><th class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top font-semibold text-white">Capability</th><th class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top font-semibold text-white">Value</th></tr>
             </thead>
             <tbody>
-              <tr><td>FTL Drive</td><td>{vessel.capabilities.ftlStatus}</td></tr>
+              <tr><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">FTL Drive</td><td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">{vessel.capabilities.ftlStatus}</td></tr>
               <tr>
-                <td>Weapons</td>
-                <td>
-                  <ul class="kvlist">
+                <td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">Weapons</td>
+                <td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">
+                  <ul class="m-0 list-none p-0">
                     {#each vessel.capabilities.weapons as w}
-                      <li>{w}</li>
+                      <li class="mt-1">{w}</li>
                     {/each}
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td>On-board Systems</td>
-                <td>
-                  <ul class="kvlist">
+                <td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">On-board Systems</td>
+                <td class="border-b border-[rgba(226,176,7,.18)] p-2 text-left align-top">
+                  <ul class="m-0 list-none p-0">
                     {#each vessel.capabilities.systems as s}
-                      <li>{s}</li>
+                      <li class="mt-1">{s}</li>
                     {/each}
                   </ul>
                 </td>
@@ -329,35 +322,35 @@
             </tbody>
           </table>
         </div>
-      </div>
+      </Panel>
     </div>
   </div>
 
   <!-- HISTORY -->
   <div id="history" role="tabpanel" aria-labelledby="tab-history" hidden={active !== 'history'}>
-    <h2 class="secthead">History</h2>
-    <div class="proset">
-      <article class="panel copy">
+    <h2 class="mb-3 font-oswald text-gold uppercase tracking-[0.14em]">History</h2>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-[2fr_1fr]">
+      <Panel class="p-[1.2rem] text-[1.05rem] leading-[1.7] text-[#dcdcdc]">
         {#each character.history as section}
-          <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">{section.title}</h3>
+          <h3 class="mb-2 mt-4 font-oswald tracking-[0.1em] text-white uppercase first:mt-0">{section.title}</h3>
           {#each section.body as para}
-            <p>{para}</p>
+            <p class="mb-0 mt-[0.6rem] first:mt-0">{para}</p>
           {/each}
         {/each}
-      </article>
-      <aside class="panel aside">
-        <h3 class="mb1" style="font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#fff">Timeline Highlights</h3>
-        <Timeline entries={character.timeline} listClass="muted" />
-      </aside>
+      </Panel>
+      <Panel class="p-4">
+        <h3 class="mb-2 font-oswald tracking-[0.1em] text-white uppercase">Timeline Highlights</h3>
+        <Timeline entries={character.timeline} listClass="text-muted" />
+      </Panel>
     </div>
   </div>
 
   <!-- TYRIUM -->
   <div id="tyrium" role="tabpanel" aria-labelledby="tab-tyrium" hidden={active !== 'tyrium'}>
-    <h2 class="secthead">Tyrium</h2>
-    <div class="tabs sub" role="tablist" aria-label="Tyrium Reference">
+    <h2 class="mb-3 font-oswald text-gold uppercase tracking-[0.14em]">Tyrium</h2>
+    <div class="mt-1 flex gap-3 pb-2" role="tablist" aria-label="Tyrium Reference">
       <button
-        class="tab subtab"
+        class="relative cursor-pointer bg-transparent px-[0.8rem] py-2 font-oswald text-[0.85rem] uppercase tracking-[0.1em] text-ink after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:origin-center after:scale-x-0 after:bg-gradient-to-r after:from-transparent after:via-gold after:to-transparent after:transition-transform after:duration-[0.18s] after:ease-out aria-selected:text-white aria-selected:after:scale-x-100"
         role="tab"
         id="tab-tyrium-field-guide"
         aria-controls="tyrium-field-guide"
@@ -367,25 +360,27 @@
     </div>
     <div
       id="tyrium-field-guide"
-      class="tyrium-panel"
+      class="mt-4"
       role="tabpanel"
       aria-labelledby="tab-tyrium-field-guide"
       hidden={tyriumActive !== 'field-guide'}
     >
-      <article class="panel copy guide">
-        {@html renderMarkdown(tyriumFieldGuide)}
-      </article>
+      <Panel class="mx-auto max-w-[80ch] overflow-x-auto p-6 text-[1.05rem] leading-[1.7] text-[#e4e4e4]">
+        <div class="guide">
+          {@html renderMarkdown(tyriumFieldGuide)}
+        </div>
+      </Panel>
     </div>
   </div>
 
   <!-- LOGS -->
   <div id="logs" role="tabpanel" aria-labelledby="tab-logs" hidden={active !== 'logs'}>
-    <h2 class="secthead">Logs</h2>
-    <div class="accordion" id="loglist">
+    <h2 class="mb-3 font-oswald text-gold uppercase tracking-[0.14em]">Logs</h2>
+    <div class="border border-line" id="loglist">
       {#each character.logs as log}
-        <details class="item">
-          <summary class="trigger">Log {String(log.id).padStart(2, '0')} — {log.title} <span class="caret">▶</span></summary>
-          <div class="paneltext">
+        <details class="group border-t border-line first:border-t-0">
+          <summary class="flex w-full cursor-pointer items-center justify-between bg-transparent p-4 text-left font-oswald tracking-[0.08em] text-white">Log {String(log.id).padStart(2, '0')} — {log.title} <span class="transition-transform duration-150 ease-out group-open:rotate-90">▶</span></summary>
+          <div class="hidden px-4 pb-4 text-muted group-open:block">
             {@html renderMarkdown(log.body)}
           </div>
         </details>
@@ -395,93 +390,7 @@
 </main>
 
 <style>
-  :global(:root){
-    --bg:#0b0b0b;         /* near-black */
-    --panel:#121212;      /* dark panel */
-    --panel-2:#171717;    /* alt panel */
-    --ink:#ececec;        /* primary text (lighter for contrast) */
-    --muted:#c4c4c4;      /* secondary text (legible on dark) */
-    --gold:#d27d2d;       /* accent (burnt orange) */
-    --gold-2:#b5651d;     /* darker accent */
-    --line:rgba(210,125,45,.36); /* accent line */
-    --danger:#ff5c5c;
-    --ok:#7bd67b;
-    --warn:#ffb84d;
-    --maxw:1100px;
-  }
-  *{box-sizing:border-box}
-  :global(html, body){height:100%}
-  :global(body){margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-
-  header{
-    position:sticky;top:0;z-index:40;
-    background:linear-gradient(180deg,var(--panel-2),rgba(23,23,23,.96));
-    border-bottom:2px solid var(--gold);
-    backdrop-filter:saturate(120%) blur(4px);
-  }
-  .bar{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem}
-  .brand{display:flex;gap:.75rem;align-items:center}
-  .glyph{width:26px;height:26px;border:2px solid var(--gold);transform:skewX(-12deg); position:relative}
-  .glyph:after{content:"";position:absolute;right:-6px;top:-6px;width:0;height:0;border-left:12px solid transparent;border-bottom:12px solid transparent;border-top:12px solid var(--gold);filter:drop-shadow(0 0 6px rgba(226,176,7,.35))}
-  .title{font-family:Oswald,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
-  .actions{display:flex;gap:.75rem}
-  .chip{border:1px solid var(--line);padding:.25rem .5rem;color:var(--muted);font-size:.8rem}
-
-  .tabs{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem 0.75rem;display:flex;gap:1rem;flex-wrap:wrap}
-  .tab{appearance:none;border:none;background:transparent;color:var(--ink);font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.12em;padding:.6rem 1rem;cursor:pointer;position:relative}
-  .tab:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent, var(--gold), transparent);transform:scaleX(0);transform-origin:center;transition:transform .18s ease}
-  .tab[aria-selected="true"]{color:#fff}
-  .tab[aria-selected="true"]:after{transform:scaleX(1)}
-  #tyrium .tabs.sub{max-width:none;padding:0 0 .5rem;gap:.75rem;margin-top:.25rem}
-  #tyrium .tab.subtab{font-size:.85rem;letter-spacing:.1em;padding:.5rem .8rem}
-
-  main{max-width:var(--maxw);margin:0 auto;padding:1rem 1.25rem 3rem}
-
-  .panel{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);position:relative}
-  .panel:before{content:"";position:absolute;top:-1px;right:-1px;width:0;height:0;border-left:22px solid transparent;border-bottom:22px solid transparent;border-top:22px solid var(--gold);filter:drop-shadow(0 0 6px rgba(226,176,7,.3))}
-  .secthead{font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin:0 0 .75rem}
-  .muted{color:var(--muted)}
-
-  #overview .grid{display:grid;grid-template-columns: 2fr 1fr;gap:1rem}
-  @media (max-width:940px){ #overview .grid{grid-template-columns:1fr} }
-  .heroimg{aspect-ratio:4/5;background:#0f0f0f center/cover;border:1px solid var(--line)}
-  .facts{padding:1rem}
-  .facts dl{display:grid;grid-template-columns: 1fr 1fr;gap:.5rem 1rem;margin:0}
-  .facts dt{color:var(--muted)}
-  .facts dd{margin:0;color:#fff}
-  .badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
-  .badge{border:1px solid var(--line);padding:.25rem .5rem;font-size:.75rem;color:var(--gold)}
-
-  #chat .chat-wrap{max-width:840px;margin:1.5rem auto}
-
-  #dossier .shell{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}
-  .block{grid-column:span 6}
-  .block.full{grid-column:span 12}
-  @media (max-width:900px){ .block{grid-column:span 12} }
-  .block .head{padding:.9rem 1rem;border-bottom:1px solid var(--line)}
-  .block .body{padding:1rem}
-  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-  .kv{border-bottom:1px dashed rgba(226,176,7,.2);padding:.35rem 0;display:block;justify-content:space-between;gap:1rem}
-  .kv .k{color:var(--muted)}
-
-  table.metrics{width:100%;border-collapse:collapse}
-  table.metrics th, table.metrics td{border-bottom:1px solid rgba(226,176,7,.18);padding:.5rem;text-align:left;vertical-align:top}
-  table.metrics th{color:#fff;font-weight:600}
-  
-  .kvlist{margin:0;padding:0;list-style:none}
-  .kvlist li + li{margin-top:.25rem}
-
-  #history .proset{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
-  @media (max-width:980px){ #history .proset{grid-template-columns:1fr} }
-  .copy{padding:1.2rem; line-height:1.7; font-size:1.05rem; color:#dcdcdc; max-width:75ch}
-  .copy p{margin:0}
-  .copy p + p{margin-top:.6rem}
-  .copy h3{margin-top:1rem}
-  .aside{padding:1rem}
-  .quote{border-left:3px solid var(--gold);padding:.5rem 1rem;color:#e9e1c2;font-style:italic}
-
-  #tyrium .tyrium-panel{margin-top:1rem}
-  #tyrium .guide{padding:1.5rem;max-width:80ch;margin:0 auto;line-height:1.7;font-size:1.05rem;color:#e4e4e4;overflow-x:auto}
+  /* Markdown content styles that are hard to utility-ify without @tailwindcss/typography */
   #tyrium .guide :global(h1){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.16em;color:#fff;margin:0 0 1rem;font-size:1.85rem}
   #tyrium .guide :global(h2){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);margin:1.5rem 0 .75rem;font-size:1.3rem;clear:both}
   #tyrium .guide :global(h3){font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:#fff;margin:1.25rem 0 .5rem;font-size:1.05rem;clear:both}
@@ -504,14 +413,4 @@
   #tyrium .guide :global(thead th){background:rgba(226,176,7,.14);color:#fff;font-weight:600}
   #tyrium .guide :global(tbody tr:nth-child(even) td){background:rgba(255,255,255,.02)}
   #tyrium .guide :global(code){background:rgba(226,176,7,.12);padding:.1rem .35rem;border-radius:3px;color:#fff;font-size:.95em}
-
-  .accordion{border:1px solid var(--line)}
-  .item + .item{border-top:1px solid var(--line)}
-  .trigger{width:100%;text-align:left;background:transparent;border:0;color:#fff;padding:1rem;font-family:Oswald,sans-serif;letter-spacing:.08em;display:flex;justify-content:space-between;align-items:center}
-  .trigger .caret{transition:transform .15s ease}
-  .paneltext{padding:0 1rem 1rem;display:none;color:var(--muted)}
-  .item[open] .paneltext{display:block}
-  .item[open] .caret{transform:rotate(90deg)}
-
-  .mb1{margin-bottom:.5rem} .mb2{margin-bottom:1rem}
 </style>

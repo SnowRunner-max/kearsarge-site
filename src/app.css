@@ -2,20 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styles */
-:root {
-  color-scheme: light;
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    @apply h-full bg-bg text-ink font-sans;
+  }
 }
 
-html, body, #svelte {
-  height: 100%;
+/* Custom utility for the glyph shape if needed, or keep as inline style/component */
+.glyph-shape {
+  transform: skewX(-12deg);
 }
 
-body {
-  @apply bg-white text-slate-900 antialiased;
-}
+@keyframes typing-bounce {
 
-.container-default {
-  @apply mx-auto max-w-3xl px-4 sm:px-6 lg:px-8;
-}
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: .6;
+  }
 
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}

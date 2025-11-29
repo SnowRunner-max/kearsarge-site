@@ -1,14 +1,16 @@
 <script lang="ts">
   import Timeline from '$lib/components/Timeline.svelte';
   import TundraChat from '$lib/components/TundraChat.svelte';
-  import { tundraKarsvaldr as character } from '$lib/data/characters/tundra-karsvaldr';
   import { tyriumFieldGuide } from '$lib/data/tyrium/field-guide';
   import { renderMarkdown } from '$lib/utils/markdown';
   import { sendChatMessage } from '$lib/client/chat';
   import type { ChatMessage } from '$lib/types/chat';
+  import type { CharacterPageData } from '$lib/types/character';
 
   type Tab = 'overview' | 'chat' | 'dossier' | 'history' | 'tyrium' | 'logs';
   type TyriumTab = 'field-guide';
+  export let data: { character: CharacterPageData; slug: string };
+  const { character } = data;
   let active: Tab = 'overview';
   let tyriumActive: TyriumTab = 'field-guide';
   const setActive = (id: Tab): void => {

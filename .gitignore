@@ -3,6 +3,7 @@ node_modules/
 .svelte-kit/
 dist/
 build/
+.cache/
 
 # Local env files
 .env*

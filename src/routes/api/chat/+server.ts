@@ -7,7 +7,7 @@ import { getContextSlicesForPrompt } from '$lib/server/context/loreRepository';
 
 const CHARACTER_ID = 'tundra-karsvaldr';
 
-const MAX_HISTORY_MESSAGES = 12;
+const MAX_HISTORY_MESSAGES = 50;
 
 interface RawChatPayload {
   message?: unknown;

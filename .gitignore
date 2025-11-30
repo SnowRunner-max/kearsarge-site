@@ -31,3 +31,4 @@ models/
 *.gguf
 *.ggml
 *.bin
+_metadata.json

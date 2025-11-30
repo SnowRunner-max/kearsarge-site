@@ -4,7 +4,7 @@ export interface CompletionParameters {
   prompt: string;
   maxTokens?: number;
   temperature?: number;
-  topP?: number;
+  minP?: number;
   stop?: string[];
   repeatPenalty?: number;
 }
@@ -16,9 +16,9 @@ interface LlamaCompletionResponse {
 
 export async function requestCompletion({
   prompt,
-  maxTokens = 150,
-  temperature = 0.8,
-  topP = 0.9,
+  maxTokens = 400,
+  temperature = 1.0,
+  minP = 0.05,
   stop = ['\n\nHuman:', 'Human:', '\n\nTundra:'],
   repeatPenalty = 1.1
 }: CompletionParameters): Promise<string> {
@@ -33,7 +33,7 @@ export async function requestCompletion({
       stream: false,
       max_tokens: maxTokens,
       temperature,
-      top_p: topP,
+      min_p: minP,
       stop,
       repeat_penalty: repeatPenalty
     })

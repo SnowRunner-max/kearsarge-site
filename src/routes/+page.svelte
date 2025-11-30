@@ -33,7 +33,7 @@
   const traits = 'Tyrium enhancements, cryo-kinetics'; // summarize from existing content
   const heroImg = '/images/tundra-karsvaldr.png'; // optional image
 
-  const MAX_CHAT_HISTORY = 12;
+  const MAX_CHAT_HISTORY = 50;
   const initialChatMessages: ChatMessage[] = [
     {
       role: 'assistant',

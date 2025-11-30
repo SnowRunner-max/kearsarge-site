@@ -17,7 +17,7 @@ if ! command -v llama-server >/dev/null 2>&1; then
 fi
 
 PORT="8080"
-CONTEXT="4096"
+CONTEXT="16384"
 GPU_LAYERS="32"
 
 cat <<INFO

@@ -5,6 +5,7 @@ interface BuildChatPromptInput {
   userMessage: string;
   history?: ChatMessage[];
   contextSlices?: string[];
+  scenario?: string[];
 }
 
 const USER_LABEL = 'Human';
@@ -13,13 +14,18 @@ const ASSISTANT_LABEL = 'Tundra';
 export function buildChatPrompt({
   userMessage,
   history = [],
-  contextSlices = []
+  contextSlices = [],
+  scenario = []
 }: BuildChatPromptInput): string {
   const trimmedUserMessage = userMessage.trim();
   const relevantHistory = history.filter((entry) => entry.content.trim().length > 0);
+  const scenarioText = scenario.join('\n\n');
 
   const sections: string[] = [tundraSystemPrompt.trim()];
 
+  if (scenarioText) {
+    sections.push(`Scene: ${scenarioText}`);
+  }
   if (contextSlices.length > 0) {
     sections.push('--- CONTEXT ---');
     sections.push(contextSlices.join('\n\n'));

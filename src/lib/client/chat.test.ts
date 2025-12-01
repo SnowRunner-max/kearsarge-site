@@ -27,7 +27,11 @@ describe('sendChatMessage', () => {
       },
       body: JSON.stringify({
         message: 'How are you?',
-        history
+        history: [
+          { role: 'user', content: 'Hello' },
+          { role: 'assistant', content: 'Greetings' }
+        ],
+        scenario: []
       })
     });
     expect(result).toEqual({ response: 'Hey there' });

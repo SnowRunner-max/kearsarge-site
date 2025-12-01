@@ -56,10 +56,13 @@ describe('POST /api/chat', () => {
       { role: 'assistant', content: '' },
       { role: 'system', content: 'nope' },
       'noise',
-      ...Array.from({ length: 14 }, (_, index) => ({
-        role: index % 2 === 0 ? 'user' : 'assistant',
-        content: ` Message ${index} `
-      }))
+      ...(() => {
+        const history = [];
+        for (let i = 0; i < 60; i++) {
+          history.push({ role: i % 2 === 0 ? 'user' : 'assistant', content: `Message ${i}` });
+        }
+        return history;
+      })()
     ];
 
     const response = await POST(
@@ -95,7 +98,7 @@ describe('POST /api/chat', () => {
 
   it('returns 502 when llama.cpp cannot be reached', async () => {
     requestCompletionMock.mockRejectedValue(new Error('offline'));
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
     const response = await POST(createEvent({ message: 'Test' }) as any);
 

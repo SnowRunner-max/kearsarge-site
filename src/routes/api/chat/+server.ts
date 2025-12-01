@@ -12,6 +12,7 @@ const MAX_HISTORY_MESSAGES = 50;
 interface RawChatPayload {
   message?: unknown;
   history?: unknown;
+  scenario?: unknown;
 }
 
 function sanitizeHistory(history: unknown): ChatMessage[] {
@@ -59,6 +60,9 @@ export const POST: RequestHandler = async ({ request, locals }) => {
   }
 
   const history = sanitizeHistory(payload.history);
+  const scenario = Array.isArray(payload.scenario) && payload.scenario.every(s => typeof s === 'string')
+    ? payload.scenario as string[]
+    : [];
   const slices = await getContextSlicesForPrompt({
     characterId: CHARACTER_ID,
     query: message,
@@ -69,7 +73,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
   const prompt = buildChatPrompt({
     userMessage: message,
     history,
-    contextSlices
+    contextSlices,
+    scenario
   });
 
   try {

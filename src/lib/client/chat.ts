@@ -3,12 +3,14 @@ import type { ChatMessage, ChatResponsePayload } from '$lib/types/chat';
 export interface SendChatMessageInput {
   message: string;
   history?: ChatMessage[];
+  scenario?: string[];
   fetcher?: typeof fetch;
 }
 
 export async function sendChatMessage({
   message,
   history = [],
+  scenario = [],
   fetcher = fetch
 }: SendChatMessageInput): Promise<ChatResponsePayload> {
   const response = await fetcher('/api/chat', {
@@ -18,7 +20,8 @@ export async function sendChatMessage({
     },
     body: JSON.stringify({
       message,
-      history
+      history,
+      scenario
     })
   });
 

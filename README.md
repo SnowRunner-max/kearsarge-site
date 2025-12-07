@@ -1,13 +1,13 @@
 # Kearsarge Site
 
-Interactive dossier for Tundra Seyfert and Tyrium research. The site includes an in-browser chat terminal that relays messages to a local llama.cpp instance through a SvelteKit server route, with lore content managed via Supabase.
+Interactive dossier for Tundra Seyfert and Tyrium research. The site includes an in-browser chat terminal that relays messages to a local llama.cpp instance through a SvelteKit server route, with lore content managed via Supabase and local context files.
 
 ## Requirements
 
 - Node.js 18+
 - npm 9+
 - A running [llama.cpp](https://github.com/ggerganov/llama.cpp) server with `/completion` and `/health` endpoints
-- A [Supabase](https://supabase.com/) project for authentication and content storage
+- A [Supabase](https://supabase.com/) project for authentication and content storage (Optional if mocking data, but configured for prod)
 
 ## Setup
 
@@ -44,33 +44,33 @@ Interactive dossier for Tundra Seyfert and Tyrium research. The site includes an
    npm run dev
    ```
 
-## Supabase Integration
+## Chat & Lore System
 
-This project uses Supabase for both Authentication and Content Management.
+This project uses a hybrid context system for RAG (Retrieval-Augmented Generation):
 
-### Authentication
-Supabase backs the login/signup flow and guards the chat API.
-- **Login/Signup**: Handled via `src/routes/login/+page.svelte` proxying to Supabase REST API.
-- **Session Management**: `src/hooks.server.ts` manages cookies and populates `event.locals`.
-- **Protection**: Unauthenticated users are redirected to `/login`.
+### 1. Database Lore
+Static dossier content, logs, and history are stored in Supabase and fetched on load.
 
-### Lore Content
-Character data, history, timelines, and logs are stored in Supabase tables:
-- `characters`
-- `character_history`
-- `character_timeline`
-- `character_logs`
+### 2. Scenario Contexts
+Dynamic, scenario-specific lore is managed via local TypeScript files in `src/lib/data/lore`.
+- **Global Context**: `tundra-context.ts` and `tundra-physical-context.ts` are always available as a baseline.
+- **Scenario Slices**: Specific files like `tundra-sauna-context.ts` or `tundra-gym-context.ts` are injected solely when the user is in that scenario mode.
 
-The application fetches this data server-side (`src/routes/+page.server.ts`) and passes it to the frontend.
+### How to Add New Scenarios
+1.  **Create Context File**: key/value pair in `src/lib/data/lore` (e.g., `tundra-bar-context.ts`).
+2.  **Export Slices**: Define `ContextSlice[]` with relevant tags (e.g., `['bar', 'social']`).
+3.  **Register Scenario**:
+    -   Update `src/lib/server/context/loreRepository.ts` to import the file and add it to `SCENARIO_CONTEXT_REGISTRY`.
+    -   Update `src/routes/+page.svelte` to add the new Scenario object to the `scenarios` array. Ensure the `loreTags` includes the key used in the registry (e.g., `'bar'`).
 
-## Chat Architecture
+## Architecture
 
-- `src/routes/api/chat/+server.ts`: SvelteKit endpoint that sanitizes history, retrieves context, builds the prompt, and forwards it to llama.cpp.
-- `src/lib/server/context/loreRepository.ts`: Dynamically fetches character data from Supabase and generates context slices for RAG (Retrieval-Augmented Generation).
-- `src/lib/server/llm/llama.ts`: Client for llama.cpp requests.
+- `src/routes/api/chat/+server.ts`: Chat endpoint. Handles proper tagging and context retrieval.
+- `src/lib/server/context/loreRepository.ts`: **Core Logic**. Selects and prioritizes context slices. Enforces isolation between scenarios (e.g., Gym lore doesn't leak into Sauna chat).
+- `src/lib/server/llm/llama.ts`: Client for llama.cpp.
 - `src/lib/components/TundraChat.svelte`: Frontend chat UI.
 
 ## Development Notes
 
-- **Styling**: CSS-based (Tailwind ready but not fully adopted for all components).
-- **Data Source**: All lore content is now database-driven. There are no local markdown files for content.
+- **Styling**: CSS-based (Tailwind ready).
+- **Tests**: Run `npm test` or `npx vitest` to verify context selection logic.

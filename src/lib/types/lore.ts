@@ -6,7 +6,7 @@ export type ContextSlice = {
   title: string;
   content: string;
   tags: string[];
-  source: 'dossier' | 'history' | 'timeline' | 'log';
+  source: 'dossier' | 'history' | 'timeline' | 'log' | 'context';
 };
 
 export type CharacterLoreBundle = {

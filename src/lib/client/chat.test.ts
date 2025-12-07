@@ -31,7 +31,8 @@ describe('sendChatMessage', () => {
           { role: 'user', content: 'Hello' },
           { role: 'assistant', content: 'Greetings' }
         ],
-        scenario: []
+        scenario: [],
+        loreTags: []
       })
     });
     expect(result).toEqual({ response: 'Hey there' });

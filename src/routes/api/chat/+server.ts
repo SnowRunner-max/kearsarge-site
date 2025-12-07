@@ -13,6 +13,7 @@ interface RawChatPayload {
   message?: unknown;
   history?: unknown;
   scenario?: unknown;
+  loreTags?: unknown;
 }
 
 function sanitizeHistory(history: unknown): ChatMessage[] {
@@ -63,10 +64,15 @@ export const POST: RequestHandler = async ({ request, locals }) => {
   const scenario = Array.isArray(payload.scenario) && payload.scenario.every(s => typeof s === 'string')
     ? payload.scenario as string[]
     : [];
+  const loreTags = Array.isArray(payload.loreTags) && payload.loreTags.every(t => typeof t === 'string')
+    ? payload.loreTags as string[]
+    : [];
+
   const slices = await getContextSlicesForPrompt({
     characterId: CHARACTER_ID,
     query: message,
-    limit: 4
+    limit: 4,
+    tags: loreTags
   });
   const contextSlices = slices.map((slice) => `# ${slice.title}\n${slice.content}`);
 

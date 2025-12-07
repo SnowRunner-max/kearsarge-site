@@ -4,6 +4,7 @@ export interface SendChatMessageInput {
   message: string;
   history?: ChatMessage[];
   scenario?: string[];
+  loreTags?: string[];
   fetcher?: typeof fetch;
 }
 
@@ -11,6 +12,7 @@ export async function sendChatMessage({
   message,
   history = [],
   scenario = [],
+  loreTags = [],
   fetcher = fetch
 }: SendChatMessageInput): Promise<ChatResponsePayload> {
   const response = await fetcher('/api/chat', {
@@ -21,7 +23,8 @@ export async function sendChatMessage({
     body: JSON.stringify({
       message,
       history,
-      scenario
+      scenario,
+      loreTags
     })
   });
 
